@@ -1,4 +1,4 @@
-# ⛺️ Bootcamp ブートキャンプ 2023 => Node.js, Express, MangoDB 
+# ⛺️ Bootcamp ブートキャンプ 2023 => Node.js, Express, MangoDB
 
 ## 🚀 Section 01: Welcome
 
@@ -22,6 +22,5 @@ console.log("File written to /txt/output.txt");
 
 ```javascript
 //non-blocking code executed
-fs.readFileSync("./txt/input.txt", "utf-8
-
+fs.readFileSync("./txt/input.txt", "utf-8");
 ```
