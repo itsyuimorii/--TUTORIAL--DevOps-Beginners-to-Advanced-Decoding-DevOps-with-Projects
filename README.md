@@ -24,3 +24,22 @@ console.log("File written to /txt/output.txt");
 //non-blocking code executed
 fs.readFileSync("./txt/input.txt", "utf-8");
 ```
+
+> CALLBACK hell
+SOLUTION: Using Promises or Async/Await [Optional Section]
+
+
+
+```javascript
+//Non-blocking code executed asynchronously
+fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
+  //console.log(data);
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(data);
+  }
+});
+console.log("will read from /txt/start.txt");
+
+```
