@@ -1,6 +1,22 @@
 # ⛺️ Bootcamp ブートキャンプ 2023 => Node.js, Express, MangoDB
 
+- [⛺️ Bootcamp ブートキャンプ 2023 =\> Node.js, Express, MangoDB](#️-bootcamp-ブートキャンプ-2023--nodejs-express-mangodb)
+  - [🚀Section 00: Set\_up](#section-00-set_up)
+        - [VSCode setup](#vscode-setup)
+  - [🚀 Section 01: Welcome](#-section-01-welcome)
+  - [🚀Section 02: Introduction to Node.js and NPM](#section-02-introduction-to-nodejs-and-npm)
+
+## 🚀Section 00: Set_up
+
+##### [VSCode setup](https://github.com/jonasschmedtmann/complete-node-bootcamp/blob/master/vscode-setup.md)
+
+[Course Material and FAQ](https://github.com/jonasschmedtmann/complete-node-bootcamp)
+
 ## 🚀 Section 01: Welcome
+
+**[⬆ back to top](#table-of-contents)**
+
+## 🚀Section 02: Introduction to Node.js and NPM
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -26,9 +42,7 @@ fs.readFileSync("./txt/input.txt", "utf-8");
 ```
 
 > CALLBACK hell
-SOLUTION: Using Promises or Async/Await [Optional Section]
-
-
+> SOLUTION: Using Promises or Async/Await [Optional Section]
 
 ```javascript
 //Non-blocking code executed asynchronously
@@ -41,5 +55,4 @@ fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
   }
 });
 console.log("will read from /txt/start.txt");
-
 ```
