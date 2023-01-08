@@ -1,10 +1,9 @@
 # ⛺️ Bootcamp ブートキャンプ 2023 => Node.js, Express, MangoDB
 
-- [⛺️ Bootcamp ブートキャンプ 2023 =\> Node.js, Express, MangoDB](#️-bootcamp-ブートキャンプ-2023--nodejs-express-mangodb)
-  - [🚀Section 00: Set\_up](#section-00-set_up)
-        - [VSCode setup](#vscode-setup)
-  - [🚀 Section 01: Welcome](#-section-01-welcome)
-  - [🚀Section 02: Introduction to Node.js and NPM](#section-02-introduction-to-nodejs-and-npm)
+- [🚀Section 00: Set\_up](#section-00-set_up)
+      - [VSCode setup](#vscode-setup)
+- [🚀 Section 01: Welcome](#-section-01-welcome)
+- [🚀Section 02: Introduction to Node.js and NPM](#section-02-introduction-to-nodejs-and-npm)
 
 ## 🚀Section 00: Set_up
 
