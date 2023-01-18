@@ -6,26 +6,29 @@
   - [🚀 Section 01: Welcome](#-section-01-welcome)
   - [🚀Section 02: Introduction to Node.js and NPM](#section-02-introduction-to-nodejs-and-npm)
 
-## 🚀Section 00: Set_up
+# 🚀Section 00: Set_up
 
 ##### [VSCode setup](https://github.com/jonasschmedtmann/complete-node-bootcamp/blob/master/vscode-setup.md)
 
 [Course Material and FAQ](https://github.com/jonasschmedtmann/complete-node-bootcamp)
 
-## 🚀 Section 01: Welcome
+# 🚀 Section 01: Welcome
 
 **[⬆ back to top](#-bootcamp-ブートキャンプ-2023--nodejs-express-mangodb)**
 
-## 🚀Section 02: Introduction to Node.js and NPM
+# 🚀Section 02: Introduction to Node.js and NPM
 
 **[⬆ back to top](#️-bootcamp-ブートキャンプ-2023--nodejs-express-mangodb)**
 
-### #Blocking and Non-Blocking: Asynchronous Nature of Node.js
+### [#](https://www.geeksforgeeks.org/node-js-file-system/?ref=lbp)Node.js File System
 
 > Synchronous=>blocking
+>
+> - **Synchronous approach:** They are called **blocking functions** as it waits for each operation to complete, only after that, it executes the next operation, hence blocking the next command from execution i.e. a command will not be executed until & unless the query has finished executing to get all the result from previous commands.
 
 ```javascript
 const fs = require("fs");
+//通过 内置模块加载对象,来调用 模块的功能
 
 //Blocking code executed synchronously
 //同期的に実行されるブロック化コード
@@ -37,6 +40,8 @@ console.log("File written to /txt/output.txt");
 ```
 
 > Asynchronous => non-blocking
+>
+> - **Asynchronous approach:** They are called **non-blocking functions** as it never waits for each operation to complete, rather it executes all operations in the first go itself. The result of each operation will be handled once the result is available i.e. each command will be executed soon after the execution of the previous command. While the previous command runs in the background and loads the result once it is finished processing the data.
 
 ```javascript
 //non-blocking code executed
@@ -59,7 +64,128 @@ fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
 console.log("will read from /txt/start.txt");
 ```
 
-### #http module 详解
+```js
+const fs = require('fs');
+
+// Asynchronous read
+fs.readFile('input.txt', function (err, data) {
+   if (err) {
+      return console.error(err);
+   }
+   console.log("Asynchronous read: " + data.toString());
+});
+```
+
+- 参数1: 需要读取文件的路径,一般是从当前外部js文件开始的相对路径
+- 参数2: 编码格式, utf-8 
+          在cmd中执行,如果 utf-8 显示是 乱码 可以试试 gbk 
+          但是实际项目不会在cmd中显示,都是在浏览器中运行,必须要设定为utf-8
+- 参数3: 读取结束,执行的回调函数
+          回调函数的参数1,报错信息,读取成功时,是 null    
+          回调函数的参数2,数据信息,读取失败时,是 undefined  
+
+### [#](https://www.geeksforgeeks.org/node-js-fs-readfile-method/?ref=lbp)Node.js`fs.readFile() `Method
+
+**Syntax:** 
+
+```
+fs.readFile( filename, encoding, callback_function )
+```
+
+**Parameters:** The method accept three parameters as mentioned above and described below: 
+
+- **filename:** It holds the name of the file to read or the entire path if stored at other location.
+
+- **encoding:** It holds the encoding of file. Its default value is **‘utf8’**.
+
+- callback_function:
+
+  It is a callback function that is called after reading of file. It takes two parameters:
+
+  - **err:** If any error occurred.
+  - **data:** Contents of the file.
+
+```js
+const fs = require('fs');
+
+// Asynchronous read
+fs.readFile('input.txt', function (err, data) {
+   if (err) {
+      return console.error(err);
+   }
+   console.log("Asynchronous read: " + data.toString());
+});
+```
+
+- 参数1: 需要读取文件的路径,一般是从当前外部js文件开始的相对路径
+- 参数2: 编码格式, utf-8         在cmd中执行,如果 utf-8 显示是 乱码 可以试试 gbk         但是实际项目不会在cmd中显示,都是在浏览器中运行,必须要设定为utf-8
+- 参数3: 读取结束,执行的回调函数        回调函数的参数1,报错信息,读取成功时,是 null            回调函数的参数2,数据信息,读取失败时,是 undefined  
+
+### #Node.js`fs.writeFile` Method
+
+**Writing to a File:** This method will overwrite the file if the file already exists. The fs.writeFile() method is used to asynchronously write the specified data to a file. By default, the file would be replaced if it exists. The ‘options’ parameter can be used to modify the functionality of the method. **Syntax:**
+
+```js
+fs.writeFile(path, data, options, callback)
+```
+
+**Parameters:**
+
+- **path:** It is a string, Buffer, URL, or file description integer that denotes the path of the file where it has to be written. Using a file descriptor will make it behave similarly to fs.write() method.
+
+- **data:** It is a string, Buffer, TypedArray, or DataView that will be written to the file.
+
+- options:
+
+   
+
+  It is a string or object that can be used to specify optional parameters that will affect the output. It has three optional parameters:
+
+  - **encoding:** It is a string value that specifies the encoding of the file. The default value is ‘utf8’.
+  - **mode:** It is an integer value that specifies the file mode. The default value is 0o666.
+  - **flag:** It is a string value that specifies the flag used while writing to the file. The default value is ‘w’.
+
+- callback: 
+
+  It is the function that would be called when the method is executed.
+
+  - **err:** It is an error that would be thrown if the operation fails.
+
+**Example:** Let us create a js file named **main.js** having the following code: 
+
+```js
+var fs = require("fs");
+
+console.log("writing into existing file");
+fs.writeFile('input.txt', 'Geeks For Geeks', function(err) {
+if (err) {
+	return console.error(err);
+}
+	
+console.log("Data written successfully!");
+console.log("Let's read newly written data");
+	
+fs.readFile('input.txt', function (err, data) {
+	if (err) {
+		return console.error(err);
+	}
+	console.log("Asynchronous read: " + data.toString());
+});
+});
+
+```
+
+### [#](https://www.geeksforgeeks.org/node-js-http-module/?ref=lbp)Node.js HTTP module 
+
+To make HTTP requests in Node.js, there is a built-in module **HTTP** in Node.js to transfer data over the HTTP. To use the HTTP server in node, we need to require the HTTP module. The HTTP module creates an HTTP server that listens to server ports and gives a response back to the client.
+
+**Syntax:**
+
+```
+var http = require('http');
+```
+
+We can create a HTTP server with the help of **http.createServer()** method.
 
 ```javascript
 // 1,加载 http模块,生成http模块对象
@@ -112,11 +238,10 @@ server.listen(8080 , function(){
 })
 ```
 
+> 通过 node.js 的 内置fs模块 和 内置 http 模块,搭建一个简易的本地
+
 ```javascript
-总结
-1,功能:
-     通过 node.js 的 内置fs模块 和 内置 http 模块,搭建一个简易的本地服务器
-2,步骤思路:
+
      1,加载 http 和 fs 内置模块
        const http = require('http');
        const fs = require('fs');
@@ -151,97 +276,31 @@ server.listen(8080 , function(){
 
 ```
 
-### #fs module 详解
+### [#](https://www.geeksforgeeks.org/node-js-url-method/)Node.js URL() Method
 
+The ‘url’ module provides utilities for URL resolution and parsing. The getters and setters implement the properties of URL objects on the class prototype, and the URL class is available on the global object.
 
+**Syntax:**
 
-```javascript
-内置模块 --- fs模块
-不需要下载安装,只要加载,就可以直接使用
-读取,导入,外部文件的内容
-可以操作 系统中的文件
-
-1,建立一个 fs 模块对象 / 导入fs模块并且执行
-
-导入的是fs模块,在 变量中 存储,变量fs就可以执行模块的功能
-类似 通过构造函数生成实例化对象,实例化对象中,可以调用构造函数封装的函数方法
-
-/*
-    class FS{
-        fun1(){}
-
-        fun2(){}
-    }
-
-    const 实例化对象 = new FS();
-    实例化对象中,就可以调用构造函数中的函数方法 fun1() fun2()...
-*/
-
-fs变量就可以调用 fs模块中,定义的方法
-const fs = require('fs');
-
-通过 内置模块加载对象,来调用 模块的功能
-
-功能1:
-fs对象.readFile()   对文件读取功能
-语法格式:
-    fs对象.readFile( 要读取文件的路径 , 编码格式(选填) , 读取完毕执行的函数  ) 
-        参数1: 要读取文件的路径
-            可以是 绝对路径---url地址
-            可以是 相对路径---从执行的外部js文件开始的相对路径
-
-        参数2: 读取完毕,执行的函数
-            参数中可以定义两个形参,形参的名称,可以是任意的符合命名规范的字符
-            一般第一个形参 是 err 第二个形参是 data
-            模块化,自行向两个形参中自动存储内容
-            第一个形参中存储的是 读取文件失败的报错信息
-                    如果读取成功,报错信息是 null 
-            第二个形参中存储的是 读取文件成功的数据信息
-                    如果读取失败,读取的数据信息是 undefined
-                    如果读取成功,默认的编码格式是 Buffer 格式的数据
-                        以十六进制数据,显示的 二进制数据流
-                    一般定义的是 utf-8 格式
-                                    
-    总结:
-    参数1: 需要读取文件的路径,一般是从当前外部js文件开始的相对路径
-    参数2: 编码格式, utf-8 
-            在cmd中执行,如果 utf-8 显示是 乱码 可以试试 gbk 
-            但是实际项目不会在cmd中显示,都是在浏览器中运行,必须要设定为utf-8
-    参数3: 读取结束,执行的回调函数
-            回调函数的参数1,报错信息,读取成功时,是 null    
-            回调函数的参数2,数据信息,读取失败时,是 undefined  
-
-
-功能2: 
-fs对象.writeFile()   对文件写入内容功能
-语法格式:
-    fs对象.writeFile( 要读取文件的路径 , 要写入的内容 , 写入完毕执行的函数 )
-        写入文件操作,有文件写入,如果文件写错了也就是没有文件那么创建文件也要写入
-        这个方法执行起来一定不会报错
-        如果是已经存在的文件,执行时,会覆盖之前存在的内容,执行结果是定义的写入的内容
-        写入完毕执行的函数,没有任何自动存储信息的形参,只是简单的执行程序
-        函数可以写一个空函数,但是必须要有
-
-node.js程序都是异步执行的
-也有同步执行的方式
-语法格式,功能,参数,与异步是完全一致的
-但是我们一般不使用同步形式
-fs对象.readFileSync() 
-fs对象.writeFileSync() 
-
+```js
+new URL(input[, base])
 ```
 
+**Parameters:** This method accepts two parameters as mentioned above and described below:
 
+**input** <*string*>**:** It is the input which is *string* type that is used to parse the absolute or relative input URL. The base is required if the input is relative and ignored if the input is absolute.
 
-### #Create a simple web server
+**base** <*string*> **|** <*URL*>**:** It is the base URL which is either of *string* type or *URL*, used to resolve against if the input is absolute or not.
+
+**Return Value:** It returns the new URL generated along with an array of data like hostname, protocol, pathname, etc. 
+
+## ⛳️Create a simple web server
 
 > Load http module
 
 ```javascript
 const http = require('http');
 ```
-
-
 
 > Creating server objects - The http module object is used to perform the functions of the http module
 
@@ -267,22 +326,79 @@ server.listen(8000, '127.0.0.1', () => {
 > - res.end(内容)向浏览器返回本次请求的响应内容, 也就是向浏览器返回一个html页面的程序代码,程序代码,往往是我们通过 fs模块 读取的文件内容
 >
 
+### [#](https://www.geeksforgeeks.org/node-js-response-writehead-method/)Node.js response.writeHead() Method
+
+response.writeHead()  property is an inbuilt property of the ‘http’ module which sends a response header to the request. The status code is a 3-digit *HTTP* status code, like 404. The last argument, headers, are the response headers. Optionally one can give a human-readable *statusMessage* as the second argument.
+
+**Syntax:**
+
+```
+response.writeHead(statusCode[, statusMessage][, headers]);
+```
+
+**Parameters:** It accepts three parameters as mentioned above and described below:
+
+- **statusCode** <*number*>**:** It accepts the status codes that are of number type.
+- **statusMessage** <*string*>**:** It accepts any string that shows the status message.
+- **headers** <*Object*>**:** It accepts any function, array, or string.
+
+**Return Value** <*http.ServerResponse*>**:** It returns a reference to the *ServerResponse*, so that calls can be chained.
+
+```js
+// Calling response.writeHead method
+ const server = http.createServer((req, res) => {
+  const pathName = req.url;
+  // Overview page
+  if (pathName === "/" || pathName === "/overview") {
+    res.writeHead(404, {
+      "Content-type": "text/html",
+      "my-own-header": "hello-world",
+    });
+  });
+```
 
 
 
-### #Routing
+### [#](https://expressjs.com/en/guide/routing.html)Routing
 
-[Node.js response.writeHead() ](https://www.geeksforgeeks.org/node-js-response-writehead-method/)
+**What is Routing?**
+*Routing* refers to how an application’s endpoints (URIs) respond to client requests. For an introduction to routing, see [Basic routing](https://expressjs.com/en/starter/basic-routing.html).
 
-### #Building a API
+These routing methods specify a callback function (sometimes called “handler functions”) called when the application receives a request to the specified route (endpoint) and HTTP method. In other words, the application “listens” for requests that match the specified route(s) and method(s), and when it detects a match, it calls the specified callback function.
 
-1. building HTML templates and holding the data
-   1. Data is read from JSON
-   2. 
+```js
+// GET method route
+app.get('/', (req, res) => {
+  res.send('GET request to the homepage')
+})
+
+// POST method route
+app.post('/', (req, res) => {
+  res.send('POST request to the homepage')
+})
+```
 
 
 
-⁇ 👇
+ 
+
+```js
+const url = require('url');
+
+const server = http.createServer((req, res) => {
+const pathName = req.url;
+  
+  if(pathName === "/" || pathName === "/overview"){
+    res.end("This is overview page")
+  }else if(pathName === "/product"){
+    res.end("This is Product page")
+  }else{
+    res.end("page not found!")
+  }
+});
+```
+
+
 
 ```js
 const cardsHtml =  dataObj.map(el=>replaceTemplate(tempCard,el)).join('');

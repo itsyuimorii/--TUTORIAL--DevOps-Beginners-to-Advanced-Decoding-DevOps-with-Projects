@@ -23,6 +23,8 @@ const tempProduct = fs.readFileSync(
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
 
+/////////////////////////////////
+//SERVER
 const server = http.createServer((req, res) => {
   const pathName = req.url;
   // Overview page
@@ -54,7 +56,7 @@ const server = http.createServer((req, res) => {
     res.end("this is the product page🥗");
 
     // API
-  } else if (pathname === "/api") {
+  } else if (pathName === "/api") {
     res.writeHead(200, {
       "Content-type": "application/json",
     });
@@ -70,6 +72,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(8000, "127.0.0.1", () => {
-  console.log("Listening to requests on port 8000");
+server.listen(8080, "127.0.0.1", () => {
+  console.log("Listening to requests on port 8000 http://127.0.0.1:8080");
 });
