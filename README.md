@@ -177,7 +177,7 @@ fs.readFile('input.txt', function (err, data) {
 
 ### [#](https://www.geeksforgeeks.org/node-js-http-module/?ref=lbp)Node.js HTTP module 
 
-To make HTTP requests in Node.js, there is a built-in module **HTTP** in Node.js to transfer data over the HTTP. To use the HTTP server in node, we need to require the HTTP module. The HTTP module creates an HTTP server that listens to server ports and gives a response back to the client.
+To make HTTP requests in Node.js, there is a built-in module **HTTP** in Node.js to transfer data over the HTTP. To use the HTTP server in node, we need to require the HTTP module. The HTTP module creates an HTTP server that listens to server ports and gives a response back to the client.核心模块 http 是 node.js 网络的关键模块，用于[搭建服务器](https://so.csdn.net/so/search?q=搭建服务器&spm=1001.2101.3001.7020)、接受请求、响应内容
 
 **Syntax:**
 
@@ -294,19 +294,67 @@ new URL(input[, base])
 
 **Return Value:** It returns the new URL generated along with an array of data like hostname, protocol, pathname, etc. 
 
+### #Node.js http.createServer ( )
+
+Creating server objects - The http module object is used to perform the functions of the http module.
+
+**Syntax:**
+
+```js
+const server = http.createServer((req, res) => {
+    res.end('superman');
+});
+```
+
+> 创建服务器对象 - http.Server 实例：http.createServer()
+> 接收一个回调函数，回调函数带有 req、res 2 个参数：
+>
+> - req - [请求对象]，它包含了与 [客户端] 相关的数据和属性（http.ServerResponse 实例）
+> - res - [响应对象]，它包含了与 [服务器] 相关的数据和属性
+>
+>  每次请求到达服务器后, 这个回调函数都将被调用, 并且回调函数有权访问内部的数据
+>
+> res.end([data])：关闭响应；必须在每个响应上调用它！！！
+> 响应结束后，服务器会将消息 data 发送给客户端
+> data 可以是 HTML 代码，res.end() 可以解析 HTML 代码！！！
+>
+> res.write(data)：在响应正文中 发送文本数据给客户端；它会发送缓冲的数据到 HTTP 响应流
+>  
+
+```javascript
+const server = http.createServer((req, res) => {
+  res.end("Hello from server!");
+});
+
+
+const server = http.createServer((req, res) => {
+    res.write('write');
+    res.end('Superman');
+});
+```
+
 ## ⛳️Create a simple web server
+
+### 👾CODE `index.js`
 
 > Load http module
 
 ```javascript
 const http = require('http');
+const fs = require("fs");
 ```
 
-> Creating server objects - The http module object is used to perform the functions of the http module
+> create server object
 
 ```javascript
-http.createServer((req, res) => {
+const server = http.createServer((req, res) => {
   res.end("Hello from server!");
+});
+
+//SERVER
+const server = http.createServer((req, res) => {
+    res.end("this is web server👀");
+  }
 });
 ```
 >  Listen to incoming request from clients
@@ -325,39 +373,6 @@ server.listen(8000, '127.0.0.1', () => {
 > - res : 存储是每次请求返回的响应内容
 > - res.end(内容)向浏览器返回本次请求的响应内容, 也就是向浏览器返回一个html页面的程序代码,程序代码,往往是我们通过 fs模块 读取的文件内容
 >
-
-### [#](https://www.geeksforgeeks.org/node-js-response-writehead-method/)Node.js response.writeHead() Method
-
-response.writeHead()  property is an inbuilt property of the ‘http’ module which sends a response header to the request. The status code is a 3-digit *HTTP* status code, like 404. The last argument, headers, are the response headers. Optionally one can give a human-readable *statusMessage* as the second argument.
-
-**Syntax:**
-
-```
-response.writeHead(statusCode[, statusMessage][, headers]);
-```
-
-**Parameters:** It accepts three parameters as mentioned above and described below:
-
-- **statusCode** <*number*>**:** It accepts the status codes that are of number type.
-- **statusMessage** <*string*>**:** It accepts any string that shows the status message.
-- **headers** <*Object*>**:** It accepts any function, array, or string.
-
-**Return Value** <*http.ServerResponse*>**:** It returns a reference to the *ServerResponse*, so that calls can be chained.
-
-```js
-// Calling response.writeHead method
- const server = http.createServer((req, res) => {
-  const pathName = req.url;
-  // Overview page
-  if (pathName === "/" || pathName === "/overview") {
-    res.writeHead(404, {
-      "Content-type": "text/html",
-      "my-own-header": "hello-world",
-    });
-  });
-```
-
-
 
 ### [#](https://expressjs.com/en/guide/routing.html)Routing
 
@@ -378,24 +393,108 @@ app.post('/', (req, res) => {
 })
 ```
 
-
-
- 
+### 👾CODE
 
 ```js
-const url = require('url');
+const fs = require("fs");
+const http = require("http");
+const url = require("url");
 
+////////////////SERVER
 const server = http.createServer((req, res) => {
-const pathName = req.url;
-  
-  if(pathName === "/" || pathName === "/overview"){
-    res.end("This is overview page")
-  }else if(pathName === "/product"){
-    res.end("This is Product page")
-  }else{
-    res.end("page not found!")
+  //console.log(req);
+  const pathName = req.url;
+
+   	// Overview page
+  if (pathName === "/" || pathName === "/overview") {
+    res.end("This is the overview page👀");
+    // Product page
+  } else if (pathName === "/product") {
+    res.end("This is the product page🥗");
+    // API
+  } else {
+    res.end("Page not found!");
   }
 });
+
+server.listen(8080, "127.0.0.1", () => {
+  console.log("Listening to requests on port 8000 http://127.0.0.1:8080");
+});
+
+```
+
+### [#](https://www.geeksforgeeks.org/node-js-response-writehead-method/)Node.js response.writeHead() Method
+
+response.writeHead()  property is an inbuilt property of the ‘http’ module which sends a response header to the request. The status code is a 3-digit *HTTP* status code, like 404. The last argument, headers, are the response headers. Optionally one can give a human-readable *statusMessage* as the second argument.
+
+> the writeHead and status codealways need to sent ou  before res.end (we sent out the response)
+
+**Syntax:**
+
+```js
+response.writeHead(statusCode[, statusMessage][, headers]);
+```
+
+**Parameters:** It accepts three parameters as mentioned above and described below:
+
+- **statusCode** <*number*>**:** It accepts the status codes that are of number type.
+- **statusMessage** <*string*>**:** It accepts any string that shows the status message.
+- **headers** <*Object*>**:** It accepts any function, array, or string.
+
+**Return Value** <*http.ServerResponse*>**:** It returns a reference to the *ServerResponse*, so that calls can be chained.
+
+```js
+// Calling response.writeHead method
+
+  	// Overview page
+  if (pathName === "/" || pathName === "/overview") {
+    res.end("This is the overview page👀");
+    // Product page
+  } else if (pathName === "/product") {
+    res.end("This is the product page🥗");
+    // API
+  } else {
+    res.writeHead(404, {
+      "Content-type": "text/html",
+      "my-own-header": "hello-world",
+    });
+    res.end("<h1>Page not found!</h1>");
+  }
+});
+```
+
+### 
+
+## ⛳️Build  a simple webAPI
+
+> a servers that users can request some data, in this case, the data is about the farm product info
+
+	1. read the file from `data.json`
+	1. Parse the json to javascript
+	1. sendback to users 
+
+```js
+...
+else if (pathName === "/api") {
+    fs.readFile(`${__dirname}/dev-data/data.json`, "utf-8", (err, data) => {
+      //parse the JSON data into an array
+      const productData = JSON.parse(data);
+
+      //notify browser sending back JSON to the browser, the file format is JSON
+      res.writeHead(200, { "content-type": "application/json" });
+
+      //res.end("This is the API page");
+      res.end(data);
+    });
+...
+```
+
+但是以上代码不够efficient, 因为每次用户访问/api, 这个文件就要被解析一次, 再sent back, 改进⬆️: just read file once in the begining, when someone hit this route, simply send back the data without having to read it each time that a suer requested . 
+
+```js
+//this is top level code that only executes once and only the asynchronous code will be executed every time and do not worry about the blocking
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const dataObj = JSON.parse(data);
 ```
 
 

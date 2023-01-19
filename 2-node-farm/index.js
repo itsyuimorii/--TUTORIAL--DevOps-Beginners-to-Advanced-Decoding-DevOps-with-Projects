@@ -1,70 +1,34 @@
 const fs = require("fs");
-//Load http module
 const http = require("http");
 const url = require("url");
-const replaceTemplate = require("./modules/replaceTemplate");
+// const replaceTemplate = require("./modules/replaceTemplate");
 // const slugify = require('slugify');
 
-/////////////////////////////////
-// SERVER
-const tempOverview = fs.readFileSync(
-  `${__dirname}/templates/template-overview.html`,
-  "utf-8"
-);
-const tempCard = fs.readFileSync(
-  `${__dirname}/templates/template-card.html`,
-  "utf-8"
-);
-const tempProduct = fs.readFileSync(
-  `${__dirname}/templates/template-product.html`,
-  "utf-8"
-);
-
+//this is top level code that only executes once and only the asynchronous code will be executed every time and do not worry about the blocking
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
 
-/////////////////////////////////
-//SERVER
+////////////////SERVER
 const server = http.createServer((req, res) => {
+  //console.log(req);
   const pathName = req.url;
+
   // Overview page
   if (pathName === "/" || pathName === "/overview") {
-    res.writeHead(200, {
-      "Content-Type": "text/html",
-    });
-    // This function is supposed to replace all placeholders in template argument being passed.
-
-    const cardsHtml = dataObj
-      .map((el) => replaceTemplate(tempCard, el))
-      .join("");
-    //console.log(cardsHtml);
-    const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardsHtml);
-    res.end(output);
-    //res.end(tempOverview);
-    //res.end("this is the overview page👀");
-
+    res.end("This is the overview page👀");
     // Product page
   } else if (pathName === "/product") {
-    res.writeHead(200, {
-      "Content-type": "text/html",
-    });
-
-    // const product = dataObj[query.id];
-    // const output = replaceTemplate(tempProduct, product);
-    // res.end(output);
-
-    res.end("this is the product page🥗");
-
+    res.end("This is the product page🥗");
     // API
   } else if (pathName === "/api") {
-    res.writeHead(200, {
-      "Content-type": "application/json",
-    });
+    //parse the JSON data into an array
+    //notify browser sending back JSON to the browser, the file format is JSON
+    res.writeHead(200, { "content-type": "application/json" });
+    //res.end("This is the API page");
     res.end(data);
-
-    // Not found
   } else {
     res.writeHead(404, {
+      //the browser is expected to get HTML type
       "Content-type": "text/html",
       "my-own-header": "hello-world",
     });
