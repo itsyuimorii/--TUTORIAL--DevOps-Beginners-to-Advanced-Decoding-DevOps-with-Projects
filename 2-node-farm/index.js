@@ -2,6 +2,8 @@ const fs = require("fs");
 //Load http module
 const http = require("http");
 const url = require("url");
+
+const slugify = require("slugify");
 const replaceTemplate = require("./modules/replaceTemplate");
 // const slugify = require('slugify');
 
@@ -26,7 +28,9 @@ const dataObj = JSON.parse(data);
 
 //创建服务器对象
 const server = http.createServer((req, res) => {
-  const pathName = req.url;
+  // console.log(req.url);
+  // const pathName = req.url;
+  const { query, pathName } = url.parse(req.url, true);
   // Overview page
   // 根据路径地址,读取文件内容,显示在页面中
   if (pathName === "/" || pathName === "/overview") {
@@ -50,11 +54,11 @@ const server = http.createServer((req, res) => {
       "Content-type": "text/html",
     });
 
-    // const product = dataObj[query.id];
-    // const output = replaceTemplate(tempProduct, product);
-    // res.end(output);
+    const product = dataObj[query.id];
+    const output = replaceTemplate(tempProduct, product);
+    res.end(output);
 
-    res.end("this is the product page🥗");
+    //res.end("this is the product page🥗");
 
     // API
   } else if (pathName === "/api") {
@@ -78,5 +82,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(8000, "127.0.0.1", () => {
-  console.log("Listening to requests on port 8000");
+  console.log("Listening to requests on port http://127.0.0.1:8000");
 });
