@@ -53,6 +53,9 @@ const slugs = dataObj.map((el) => slugify(el.productName, { lower: true }));
 console.log(slugs);
 
 const server = http.createServer((req, res) => {
+  // console.log(req.url);
+  // console.log(url.parse(req.url, true));
+
   const { query, pathname } = url.parse(req.url, true);
 
   // Overview page
@@ -72,6 +75,7 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, {
       "Content-type": "text/html",
     });
+
     const product = dataObj[query.id];
     const output = replaceTemplate(tempProduct, product);
     res.end(output);
@@ -93,6 +97,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(8000, "127.0.0.1", () => {
-  console.log("Listening to requests on port 8000");
+server.listen(3000, "127.0.0.1", () => {
+  console.log("Listening to requests on port 3000");
 });

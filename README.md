@@ -498,3 +498,59 @@ const cardsHtml = dataObj.map((el) => replaceTemplate(tempCard, el)).join("");
 - **.map** - standard array's method which receives a callback function as an argument that will be invoked for each object in the array. The returning value is always an array with the same number of items as in the source one, but the values of the new array will correspond to the values returned by the provided callback from each iteration. If the callback doesn't explicitly return a value, then the resulting item will be **undefined** and still be part of the resulting array.
 - **replaceTemplate** is a function that receives 2 arguments, tempCard is an HTML string that is read from the file (be aware that strings are getting copied when passed as arguments unlike objects, which passed by the reference), so replaceTemplate will always get the fresh copy of the HTML template (with placeholders) and all the modifications based on that will be done to its copy but not to the original one. Knowing this fact, I suppose the following line is redundant: let output = temp; So the author could directly change the value of temp and it won't harm the original value got from the file :) So this function replaces all the placeholders in the input string with the values from the object and returns this value to the .map. This means that the result of the .map will be an array of strings with replacements (the list of cards with real values)
 - **.join** takes the array with the cards (HTML strings) and concatenates all of them in one string with no separator, so the result will contain a list of cards in HTML format.
+
+## ⛳️Parsing variables from urls
+
+```js
+const url = require("url");
+ 
+// console.log(req.url);
+// console.log(url.parse(req.url, true));
+
+const { query, pathname } = url.parse(req.url, true);
+```
+
+```js
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?id=0',
+  query: [Object: null prototype] { id: '0' },
+  pathname: '/product',
+  path: '/product?id=0',
+  href: '/product?id=0'
+}
+```
+
+## Create Modules
+
+> modules/replaceTemplate.js
+
+> using this modules for multiple files
+
+```js
+module.exports = (temp, product) => {
+  let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
+  output = output.replace(/{%IMAGE%}/g, product.image);
+  output = output.replace(/{%PRICE%}/g, product.price);
+  output = output.replace(/{%FROM%}/g, product.from);
+  output = output.replace(/{%NUTRIENTS%}/g, product.nutrients);
+  output = output.replace(/{%QUANTITY%}/g, product.quantity);
+  output = output.replace(/{%DESCRIPTION%}/g, product.description);
+  output = output.replace(/{%ID%}/g, product.id);
+
+  if (!product.organic)
+    output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic");
+  return output;
+};
+```
+
+```js
+const replaceTemplate = require("./modules/replaceTemplate");
+```
+
