@@ -63,10 +63,12 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, {
       "Content-type": "text/html",
     });
-
+    // res.end("templateOverview");
+    //.join to make it all String
     const cardsHtml = dataObj
       .map((el) => replaceTemplate(tempCard, el))
       .join("");
+
     const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardsHtml);
     res.end(output);
 
