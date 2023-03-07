@@ -2,7 +2,7 @@ const fs = require('fs');
 const superagent = require('superagent');
 
 //callback hell😤
-fs.readFile(`"${__dirname}/dog.txt,`, (err, data) => {
+/* fs.readFile(`"${__dirname}/dog.txt,`, (err, data) => {
   console.log(`Breed:${data}`);
 
   superagent
@@ -17,4 +17,6 @@ fs.readFile(`"${__dirname}/dog.txt,`, (err, data) => {
         console.log('random dog image saved to file');
       });
     });
-});
+}); */
+
+//Promise
