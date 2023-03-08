@@ -25,7 +25,7 @@ const getDogPic = async () => {
     const data = await readFilePro(`${__dirname}/dog.txt`);
     console.log(`Breed: ${data}`);
 
-    const res1Pro = superagent.get(
+    const res = superagent.get(
       `https://dog.ceo/api/breed/${data}/images/random`
     );
     const res2Pro = superagent.get(
