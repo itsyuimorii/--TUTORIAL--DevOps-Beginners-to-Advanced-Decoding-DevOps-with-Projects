@@ -1,0 +1,16 @@
+{
+  "name": "tous",
+  "version": "1.0.0",
+  "description": "Node.js, express, mongoDB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "itsyuimorii",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {},
+  "keywords": []
+}
