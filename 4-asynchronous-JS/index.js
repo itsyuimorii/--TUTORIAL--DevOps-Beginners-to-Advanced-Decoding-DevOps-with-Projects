@@ -59,6 +59,19 @@ const getDogPic = async () => {
   }
 })();
 
+//second way to write Promises
+/*
+console.log('1: Will get dog pics!');
+getDogPic()
+  .then(x => {
+    console.log(x);
+    console.log('3: Done getting dog pics!');
+  })
+  .catch(err => {
+    console.log('ERROR 💥');
+  });
+*/
+
 //Promises
 /* readFilePro(`${__dirname}/dog.txt`)
   .then((data) => {
