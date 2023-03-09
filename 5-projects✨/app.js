@@ -5,9 +5,12 @@ const morgan = require('morgan');
 //Get an instance (object) of the server
 const app = express();
 
+// 1) MIDDLEWARE
+
+app.use(morgan('dev'));
+
 app.use(express.json());
 
-//create own middleware
 app.use((req, res, next) => {
   console.log('Hello from the middleware 👋 ');
   next();
@@ -21,6 +24,8 @@ app.use((req, res, next) => {
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
+
+// 2) ROUTE HANDLER
 
 const getAllTours = (req, res) => {
   res.status(200).json({
@@ -118,6 +123,8 @@ const deleteTour = (req, res) => {
   });
 };
 
+//3] ROUTES
+
 //app.get('/api/v1/tours', getAllTours);
 //app.post('/api/v1/tours', createTour);
 // app.get('/api/v1/tours/:id', getTour);
@@ -132,7 +139,7 @@ app
 
 app.route('/api/v1/tours').get(getAllTours).post(createTour);
 
-//Start the server
+//4] SERVER
 const port = 3000;
 app.listen(port, (error) => {
   if (!error)
