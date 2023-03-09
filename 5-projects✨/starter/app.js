@@ -5,6 +5,8 @@ const fs = require('fs');
 const app = express();
 
 app.use(express.json());
+//create middleware
+app.use((req, res, next) =>);
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
