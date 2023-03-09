@@ -31,6 +31,22 @@ app.get('/api/v1/tours/:id', (req, res) => {
   });
 });
 
+app.get('/api/v1/tours/:id', (req, res) => {
+  // where all the parameters of all the variables that we define here are stored
+  console.log(req.params);
+
+  const tour = tours.find((el) => el.id === req.params.id);
+
+  res.status(200).json({
+    //JSend data formations
+    status: 'success',
+    data: {
+      //   tours: tours,
+      tours,
+    },
+  });
+});
+
 app.post('/api/v1/tours', (req, res) => {
   //the data from the body in the console, just to verify that it actually works, so req.body.
   //get data from the body in the console
