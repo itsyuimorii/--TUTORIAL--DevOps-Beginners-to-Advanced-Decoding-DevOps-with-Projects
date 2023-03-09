@@ -4,6 +4,18 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
 
+exports.checkID = (req, res, next, val) => {
+  //check if the id is not existing
+  console.log(`Tour id is: ${val}`);
+  if (req.params.id * 1 > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+  next();
+};
+
 // 2) ROUTE HANDLER
 exports.getAllTours = (req, res) => {
   res.status(200).json({
@@ -28,12 +40,12 @@ exports.getTour = (req, res) => {
   const tour = tours.find((el) => el.id === id);
 
   //check if the id is not existing
-  if (!tour) {
-    return res.status(404).json({
-      status: 'Not Found',
-      message: 'Invalid ID',
-    });
-  }
+  // if (!tour) {
+  //   return res.status(404).json({
+  //     status: 'Not Found',
+  //     message: 'Invalid ID',
+  //   });
+  // }
 
   res.status(200).json({
     //JSend data formations
@@ -73,12 +85,12 @@ exports.createTour = (req, res) => {
 
 exports.updateTour = (req, res) => {
   //check if the id is not existing
-  if (req.params.id * 1 > tours.length) {
-    return res.status(404).json({
-      status: 'failed',
-      message: 'Invalid ID',
-    });
-  }
+  // if (req.params.id * 1 > tours.length) {
+  //   return res.status(404).json({
+  //     status: 'failed',
+  //     message: 'Invalid ID',
+  //   });
+  // }
   res.status(200).json({
     status: 'success',
     data: {
@@ -88,13 +100,13 @@ exports.updateTour = (req, res) => {
 };
 
 exports.deleteTour = (req, res) => {
-  //check if the id is not existing
-  if (req.params.id * 1 > tours.length) {
-    return res.status(404).json({
-      status: 'failed',
-      message: 'Invalid ID',
-    });
-  }
+  // //check if the id is not existing
+  // if (req.params.id * 1 > tours.length) {
+  //   return res.status(404).json({
+  //     status: 'failed',
+  //     message: 'Invalid ID',
+  //   });
+  // }
   res.status(204).json({
     status: 'success',
     data: null,
