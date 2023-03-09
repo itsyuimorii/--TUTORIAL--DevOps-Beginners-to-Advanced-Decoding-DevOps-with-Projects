@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 
 //Get an instance (object) of the server
 const app = express();
@@ -8,8 +9,20 @@ const app = express();
 //     .status(200)
 //     .json({ message: 'Hello from the server side!', app: 'itsyuimoriiTours' });
 // });
+const tours = JSON.parse(
+  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
+);
 
-app.get('/api/v1/tours', (req, res) => {});
+app.get('/api/v1/tours', (req, res) => {
+  res.status(200).json({
+    //JSend data formations
+    status: 'success',
+    data: {
+      //   tours: tours,
+      tours,
+    },
+  });
+});
 
 //Start the server
 const port = 3000;
