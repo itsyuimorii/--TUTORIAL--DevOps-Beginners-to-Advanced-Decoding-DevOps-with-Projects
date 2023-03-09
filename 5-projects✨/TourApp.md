@@ -851,5 +851,12 @@ userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 >   .route('/:id')
 > ```
 >
-> 
+> ```js
+> router.param('id', (req, res, next, val) => {
+>   console.log(`Tour id is: ${val}`);
+>   next();
+> });
+> ```
+
+Using it to check valid ID
 
