@@ -860,3 +860,34 @@ userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 Using it to check valid ID
 
+> Routes/tourRoutes.js
+
+```js
+
+router.param('id', tourController.checkID);
+
+// router.param('id', (req, res, next, val) => {
+//   //console.log(`Tour id is: ${val}`);
+//   next();
+// });
+
+```
+> ontrollers/tourController.js
+```js
+exports.checkID = (req, res, next, val) => {
+  //check if the id is not existing
+  console.log(`Tour id is: ${val}`);
+  if (req.params.id * 1 > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+  next();
+};
+```
+
+### Chaining multiple middleware functions for same route
+
+
+
