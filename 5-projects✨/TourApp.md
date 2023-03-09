@@ -480,3 +480,14 @@ app
 ![Screen Shot 2023-03-09 at 10.54.59 AM](/Users/yuimorii/Desktop/Screen Shot 2023-03-09 at 10.54.59 AM.png)
 
 ### Create Middleware function
+
+```js 
+//create own middleware
+app.use((req, res, next) => {
+  console.log('Hello from the middleware 👋 ');
+  next();
+});
+```
+
+
+
