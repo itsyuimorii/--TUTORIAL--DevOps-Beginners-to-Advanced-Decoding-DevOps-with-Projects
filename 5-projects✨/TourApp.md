@@ -514,6 +514,7 @@ const getAllTours = (req, res) => {
 
 ```js
 const morgan = require('morgan');
+app.use(morgan('dev'));
 
 ```
 
