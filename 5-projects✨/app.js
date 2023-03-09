@@ -30,12 +30,4 @@ app.use('/api/v1/tours', tourRouter);
 // app.patch('/api/v1/tours/:id', updateTour);
 // app.delete('/api/v1/tours/:id', deleteTour);
 
-// 4) START SERVER
-const port = 3000;
-app.listen(port, (error) => {
-  if (!error)
-    console.log(
-      `Server is Successfully Running, and App is listening on port ${port}...`
-    );
-  else console.log("Error occurred, server can't start", error);
-});
+module.exports = app;
