@@ -19,6 +19,7 @@ app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({
     //JSend data formations
     status: 'success',
+    results: tours.length,
     data: {
       //   tours: tours,
       tours: tours,
@@ -36,7 +37,7 @@ app.get('/api/v1/tours/:id', (req, res) => {
   const tour = tours.find((el) => el.id === id);
 
   //check if the id is not existing
-  if (id > tours.length) {
+  if (!tour) {
     return res.status(404).json({
       status: 'Not Found',
       message: 'Invalid ID',
@@ -46,6 +47,7 @@ app.get('/api/v1/tours/:id', (req, res) => {
   res.status(200).json({
     //JSend data formations
     status: 'success',
+
     data: {
       //   tours: tours,
       tour: tour,
@@ -76,6 +78,22 @@ app.post('/api/v1/tours', (req, res) => {
     }
   );
   //res.send('Done');
+});
+
+app.patch('/api/v1/tours/:id', (req, res) => {
+  //check if the id is not existing
+  if (req.params.id * 1 > tours.length) {
+    return res.status(404).json({
+      status: 'failed',
+      message: 'Invalid ID',
+    });
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour: '<Updated tour here...>',
+    },
+  });
 });
 
 //Start the server
