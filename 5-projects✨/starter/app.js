@@ -6,16 +6,11 @@ const app = express();
 
 app.use(express.json());
 
-// app.get('/', (req, res) => {
-//   res
-//     .status(200)
-//     .json({ message: 'Hello from the server side!', app: 'itsyuimoriiTours' });
-// });
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
 
-app.get('/api/v1/tours', (req, res) => {
+const getAllTours = (req, res) => {
   res.status(200).json({
     //JSend data formations
     status: 'success',
@@ -25,9 +20,9 @@ app.get('/api/v1/tours', (req, res) => {
       tours: tours,
     },
   });
-});
+};
 
-app.get('/api/v1/tours/:id', (req, res) => {
+const getTour = (req, res) => {
   // where all the parameters of all the variables that we define here are stored
   console.log(req.params);
   //when we multiply a string that looks like a number,when we multiply that with another number,it will then automatically convert that string to a number.
@@ -53,9 +48,9 @@ app.get('/api/v1/tours/:id', (req, res) => {
       tour: tour,
     },
   });
-});
+};
 
-app.post('/api/v1/tours', (req, res) => {
+const createTour = (req, res) => {
   //the data from the body in the console, just to verify that it actually works, so req.body.
   //get data from the body in the console
   //console.log(req.body);
@@ -78,9 +73,9 @@ app.post('/api/v1/tours', (req, res) => {
     }
   );
   //res.send('Done');
-});
+};
 
-app.patch('/api/v1/tours/:id', (req, res) => {
+const updateTour = (req, res) => {
   //check if the id is not existing
   if (req.params.id * 1 > tours.length) {
     return res.status(404).json({
@@ -94,9 +89,9 @@ app.patch('/api/v1/tours/:id', (req, res) => {
       tour: '<Updated tour here...>',
     },
   });
-});
+};
 
-app.delete('/api/v1/tours/:id', (req, res) => {
+const deleteTour = (req, res) => {
   //check if the id is not existing
   if (req.params.id * 1 > tours.length) {
     return res.status(404).json({
@@ -108,7 +103,21 @@ app.delete('/api/v1/tours/:id', (req, res) => {
     status: 'success',
     data: null,
   });
-});
+};
+
+//app.get('/api/v1/tours', getAllTours);
+//app.post('/api/v1/tours', createTour);
+// app.get('/api/v1/tours/:id', getTour);
+// app.patch('/api/v1/tours/:id', updateTour);
+// app.delete('/api/v1/tours/:id', deleteTour);
+
+app.route('/api/v1/tours').get(getAllTours).post(createTour);
+
+app
+  .route('/api/v1/tours/:id')
+  .get(getTour)
+  .patch(createTour)
+  .delete(deleteTour);
 
 //Start the server
 const port = 3000;
