@@ -487,7 +487,31 @@ app.use((req, res, next) => {
   console.log('Hello from the middleware 👋 ');
   next();
 });
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toDateString();
+  next();
+});
+const getAllTours = (req, res) => {
+  res.status(200).json({
+    //JSend data formations
+    status: 'success',
+    requestedAt: req.requestTime,
+    results: tours.length,
+    data: {
+      //   tours: tours,
+      tours: tours,
+    },
+  });
+};
 ```
 
+> Output: `"requestedAt": "Thu Mar 09 2023",`
 
+### Using 3rd-Party Middleware
+
+```js
+const morgan = require('morgan');
+
+```
 

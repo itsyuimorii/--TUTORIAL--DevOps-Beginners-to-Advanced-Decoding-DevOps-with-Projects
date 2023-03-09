@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const morgan = require('morgan');
 
 //Get an instance (object) of the server
 const app = express();
@@ -12,6 +13,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  req.requestTime = new Date().toDateString();
+  next();
+});
+
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
@@ -20,6 +26,7 @@ const getAllTours = (req, res) => {
   res.status(200).json({
     //JSend data formations
     status: 'success',
+    requestedAt: req.requestTime,
     results: tours.length,
     data: {
       //   tours: tours,
