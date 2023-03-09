@@ -475,7 +475,7 @@ app
 
 ## Middleware and the Request-Response circle
 
-實際上，我們之前已經使用過中間件。我們使用 Express 點 JSON 來訪問請求正文在請求對像上(body.parser)。實際上，我們可以說在 Express 中，一切都是中間件。
+> In fact, we have used middleware before. We use Express to point JSON to access the request body on the request object (body.parser). In fact, we can say that in Express, everything is middleware.**The initial request and response object progressively traverses each middleware.**
 
 ![Screen Shot 2023-03-09 at 10.54.59 AM](/Users/yuimorii/Desktop/Screen Shot 2023-03-09 at 10.54.59 AM.png)
 
