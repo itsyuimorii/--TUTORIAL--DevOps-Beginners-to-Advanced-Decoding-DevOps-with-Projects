@@ -435,7 +435,7 @@ app.listen(port, (error) => {
 
 ```
 
-## Refactoring ROUTES
+### Refactoring ROUTES
 
 ```js
 const getAllTours = (req, res) => {
@@ -473,7 +473,7 @@ app
   .delete(deleteTour);
 ```
 
-## Middleware and the Request-Response circle
+### Middleware and the Request-Response circle
 
 > In fact, we have used middleware before. We use Express to point JSON to access the request body on the request object (body.parser). In fact, we can say that in Express, everything is middleware.**The initial request and response object progressively traverses each middleware.**
 
@@ -519,7 +519,7 @@ app.use(morgan('dev'));
 
 > GET /api/v1/tours 200 4.770 ms - 8885
 
-## Implementing the USER Routes
+### Implementing the USER Routes
 
 ```js
 const getAllUsers = (req, res) => {
@@ -567,7 +567,7 @@ app
 
 ```
 
-## Creating and Mounting Multiple Routers
+### Creating and Mounting Multiple Routers
 
 ```js
  
@@ -585,7 +585,7 @@ userRouter.route('/').get(getAllUsers).post(createUser);
 userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 ```
 
-## Better File structure
+### ✨Stage 2:Better File structure
 
 > app.js
 >
@@ -836,11 +836,20 @@ userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 ```bash
     "start": "nodemon server.js"
-    
     npm start
+    
+    //install nodemon 
+    npm i nodemon --save-dev
 ```
 
+### Param middleware 
 
-
-
+> So param middleware is middleware that only runs for certain parameters, so basically, when we have a certain parameter in our URL. Now in our example here, the only parameter that we might have in our route URL is the id, right?
+>
+> ```js
+> router
+>   .route('/:id')
+> ```
+>
+> 
 
