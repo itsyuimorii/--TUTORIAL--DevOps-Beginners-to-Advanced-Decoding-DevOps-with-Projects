@@ -889,5 +889,32 @@ exports.checkID = (req, res, next, val) => {
 
 ### Chaining multiple middleware functions for same route
 
+> Routes/tourRoutes.js
+>
+> if its post request, it will run this middleware => tourController.checkBody
+
+```js
+router
+  .route('/')
+  .get(tourController.getAllTours)
+  .post(tourController.checkBody, tourController.createTour);
+```
+
+> controllers/tourController.js
+
+```js
+exports.checkBody = (req, res, next) => {
+  if (!req.body.name || !req.body.price) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Missing name or price',
+    });
+  }
+  next();
+};
+```
+
+
+
 
 

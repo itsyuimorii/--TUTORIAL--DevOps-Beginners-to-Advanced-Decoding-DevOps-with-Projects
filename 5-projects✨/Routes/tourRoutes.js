@@ -11,10 +11,16 @@ router.param('id', tourController.checkID);
 //   next();
 // });
 
+//Create a checkBody middleware
+
+//Check if body contains the name and price properties
+//if not, send back 404 (bad request)
+//Add it to the post handler stack
+
 router
   .route('/')
   .get(tourController.getAllTours)
-  .post(tourController.createTour);
+  .post(tourController.checkBody, tourController.createTour);
 router
   .route('/:id')
   .get(tourController.getTour)
