@@ -1,5 +1,11 @@
 const express = require('express');
+const fs = require('fs');
 
+const tours = JSON.parse(
+  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
+);
+
+// 2) ROUTE HANDLER
 const getAllTours = (req, res) => {
   res.status(200).json({
     //JSend data formations
@@ -52,7 +58,7 @@ const createTour = (req, res) => {
   tours.push(newTour);
   //persist that into file,using fs.writeFileSync
   fs.writeFile(
-    `${__dirname}/dev-data/data/tours-simple.json`,
+    `${__dirname}/../dev-data/data/tours-simple.json`,
     JSON.stringify(tours),
     (err) => {
       res.status(201).json({
@@ -95,10 +101,6 @@ const deleteTour = (req, res) => {
     data: null,
   });
 };
-
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
-);
 
 const router = express.Router();
 

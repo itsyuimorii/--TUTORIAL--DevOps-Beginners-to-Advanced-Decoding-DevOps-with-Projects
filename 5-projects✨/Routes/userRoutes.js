@@ -33,7 +33,6 @@ const deleteUser = (req, res) => {
     message: 'this route is not yet defined!',
   });
 };
-//3] ROUTES
 
 const router = express.Router();
 

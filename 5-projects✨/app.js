@@ -1,6 +1,8 @@
 const express = require('express');
-const fs = require('fs');
 const morgan = require('morgan');
+
+const tourRouter = require('./Routes/tourRoutes');
+const userRouter = require('./Routes/userRoutes');
 
 //Get an instance (object) of the server
 const app = express();
@@ -18,10 +20,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// 2) ROUTE HANDLER
+//ROUTES
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tours', tourRouter);
-//3] ROUTES
 
 //app.get('/api/v1/tours', getAllTours);
 //app.post('/api/v1/tours', createTour);
