@@ -15,7 +15,7 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
 
-app.get('/api/v1/tours', (req, res) => {
+/* app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({
     //JSend data formations
     status: 'success',
@@ -25,11 +25,12 @@ app.get('/api/v1/tours', (req, res) => {
     },
   });
 });
-
+ */
 app.get('/api/v1/tours/:id', (req, res) => {
   // where all the parameters of all the variables that we define here are stored
   console.log(req.params);
-
+  //when we multiply a string that looks like a number,when we multiply that with another number,it will then automatically convert that string to a number.
+  const id = req.params.id * 1;
   const tour = tours.find((el) => el.id === req.params.id);
 
   res.status(200).json({
