@@ -21,7 +21,7 @@ app.get('/api/v1/tours', (req, res) => {
     status: 'success',
     data: {
       //   tours: tours,
-      tours,
+      tours: tours,
     },
   });
 });
@@ -31,15 +31,24 @@ app.get('/api/v1/tours/:id', (req, res) => {
   console.log(req.params);
   //when we multiply a string that looks like a number,when we multiply that with another number,it will then automatically convert that string to a number.
   const id = req.params.id * 1;
+
   //loop through the array,and in each of the iterations,we will have access to the current element,and we will return either true or false in each of the iterations
   const tour = tours.find((el) => el.id === id);
+
+  //check if the id is not existing
+  if (id > tours.length) {
+    return res.status(404).json({
+      status: 'Not Found',
+      message: 'Invalid ID',
+    });
+  }
 
   res.status(200).json({
     //JSend data formations
     status: 'success',
     data: {
       //   tours: tours,
-      tour,
+      tour: tour,
     },
   });
 });
