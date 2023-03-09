@@ -20,7 +20,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//ROUTES
+// 3) ROUTES
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tours', tourRouter);
 
@@ -30,7 +30,7 @@ app.use('/api/v1/tours', tourRouter);
 // app.patch('/api/v1/tours/:id', updateTour);
 // app.delete('/api/v1/tours/:id', deleteTour);
 
-//4] SERVER
+// 4) START SERVER
 const port = 3000;
 app.listen(port, (error) => {
   if (!error)
