@@ -510,6 +510,8 @@ const getAllTours = (req, res) => {
 
 ### Using 3rd-Party Middleware
 
+[morgan github 🐈‍⬛](https://github.com/expressjs/morgan/blob/master/index.js)
+
 ```js
 const morgan = require('morgan');
 
