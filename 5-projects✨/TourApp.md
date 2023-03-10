@@ -1076,7 +1076,27 @@ Ttwo more things about **BSON documents**. First, the **maximum size** for each 
 > **And the data that we create in the Mongo Shell is always documents.**And so of course we have to `create the document inside of a collection`, 
 
 ```js
-db.tours.insertMany()
+db.tours.insertMany();
 ```
 
-> and so we **specify that collection before we insert a document**.And this works like this, so db, which stands for the current database, which is in this casenatours-test, and then we specify the name of the collectionwhich is tours, and then on thatwe use the insertMany function.So insertMany just like that, so just to recap here,Database is the currently used database that isright now active, and when we want to insert adocument into it we need to specify the collectionwhere that document is gonna live.And we do that by using dot, and thenthe name of the collection, which is in this case "tours".Now right now this collection hasn't been created,and so it will create it once we run this command, okay.
+> and so we **specify that collection before we insert a document**.And this works like this, so db, which stands for the current database, which is in this case `itsyuimoriiTour-test`,  and then we **specify the name of the collection** which is tours, and then on that we use the `db.tours.insertMany() `function. so just to recap here, Database is the currently used database that is right now active, and when we want to insert adocument into it we need to specify the collection where that document is gonna live.And we do that by using dot, and then **the name of the collection, which is in this case "tours"**.Now right now this collection hasn't been created,and so it will create it once we run this command
+
+```js
+db.tours.insertMany({name: 'The Forest Hiker', price: 297, rating: 4.7})
+```
+
+> So, remember that MongoDb uses **BSON**,which is quite similar to JSON,so we can actually simply pass a **JavaScript object** into this insert Many function, and it willthen convert it into JSON and BSON, so a regular JavaScript object like this,and then just like before, let's definethe name of the tour.And I'm calling it The Forest Hiker, which isone of the tours that we actually have in our JSON document at this point, so The Forest Hiker,let's set a price to 297,and then also a rating, like an average rating,which can be 4.7.
+>
+> So this here looks like just a regular JavaScript object,now we could also use quotes on the property names,but that is actually optional, okay.Now here on these,and here we probably need the double quotes,okay so JSON does not recognize the single quotes,and so to be on the safe side let's just use the double quotes here, even though I usually like to use the single ones.And now just before we hit return, we actually need toalso correct this function here, because it's notinsertMany, because we're actually only insertingone document here,so it's called insertOne, okay. So we use insertMany to create multiple documents,and we use insertOne when we just wanna create one. 
+
+ ```js
+ db.tours.find()
+ ```
+
+> And notice how it also automatically createdthis object ID here which is the unique identifierof this document.So remember how I said that MongoDB would automaticallycreate these unique identifiers behind the scenes,and so that's exactly what you see here.And besides that, well, you see that this reallyis just a **regular JSON object**.And so this makes it great and really easy to work with JavaScript, and so as you can guess, this is going tomake it really easy to work with MongoDB data in JavaScript.Because we're already using **kind of the same format that we're already used to in JavaScript.** so that is one of the main reasons why MongoDB is so popular for Node JS applications. Okay, now another very useful command is show dbs,which will basically show us all the databases that we have in MongoDB, and so here you see our itsyuimoriiTest database.But we also have some other ones,which MongoDB automatically creates for us.And yours might not be the same as these three,but if not, don't worry, and just like beforewe could use the "use" command to switch to one of these.So let's say we now wanted to use admin, and so nowwe switched to DB admin, all right. So again, **"use" is to switch to an existing databaseor to create a new one,** if the name thatwe pass into it does not yet exist.
+
+```js
+show collections
+
+```
+
