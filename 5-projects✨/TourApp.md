@@ -952,7 +952,7 @@ app.use(express.static(`${__dirname}/public`));
 > ```
 >
 
-### Environment variables 
+### ⁉️ Environment variables 
 
 > So node JS, or Express apps,can run in different environments.And the most important ones are the **development environmentand the production environment.**That's because depending on the environment,we might use different databases for example,or we might turn login on or off,or we might turn debugging on or off,or really all kinds of different settings that mightchange depending on the development that we're in.So again the most important ones are the **developmentand the production environment.**
 
@@ -994,7 +994,47 @@ app.use(express.static(`${__dirname}/public`));
   }
   ```
 
-  
+## ESlint and prettier
 
-  
+>package.json
+>
+>```js
+>npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev
+>//they have to be installed locally.It would not work if we tried to do this globally.  
+>
+>
+>  "devDependencies": {
+>    "eslint": "^8.35.0",
+>    "eslint-config-airbnb": "^19.0.4",
+>    "eslint-config-prettier": "^8.7.0",
+>    "eslint-plugin-import": "^2.27.5",
+>    "eslint-plugin-jsx-a11y": "^6.7.1",
+>    "eslint-plugin-node": "^11.1.0",
+>    "eslint-plugin-prettier": "^4.2.1",
+>    "eslint-plugin-react": "^7.32.2",
+>    "prettier": "^2.8.4"
+>```
 
+> .eslintrc.json
+>
+> ```js
+>  {
+>   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
+>   "plugins": ["prettier"],
+>   "rules": {
+>     "prettier/prettier": "error",
+>     "spaced-comment": "off",
+>     "no-console": "off",
+>     "consistent-return": "off",
+>     "func-names": "off",
+>     "object-shorthand": "off",
+>     "no-process-exit": "off",
+>     "no-param-reassign": "off",
+>     "no-return-await": "off",
+>     "no-underscore-dangle": "off",
+>     "class-methods-use-this": "off",
+>     "prefer-destructuring": ["error", { "object": true, "array": false }],
+>     "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }]
+>   }
+> }
+> ```
