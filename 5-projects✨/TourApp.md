@@ -914,7 +914,43 @@ exports.checkBody = (req, res, next) => {
 };
 ```
 
+### Servering static files
 
+```js
+app.use(express.static(`${__dirname}/public`));
+```
 
+> http://127.0.0.1:3000/overview.html\
+>
+> ```js
+> //npm start
+> [nodemon] 2.0.21
+> [nodemon] to restart at any time, enter `rs`
+> [nodemon] watching path(s): *.*
+> [nodemon] watching extensions: js,mjs,json
+> [nodemon] starting `node server.js`
+> Server is Successfully Running, and App is listening on port 3000...
+> GET /overview.html 304 4.760 ms - -
+> GET /css/style.css 304 0.755 ms - -
+> GET /img/logo-white.png 304 1.210 ms - -
+> Hello from the middleware 👋 
+> GET /img/user.jpg 404 3.811 ms - 151
+> Hello from the middleware 👋 
+> GET /img/tour-2-cover.jpg 404 1.937 ms - 159
+> Hello from the middleware 👋 
+> GET /img/tour-4-cover.jpg 404 2.088 ms - 159
+> Hello from the middleware 👋 
+> GET /img/tour-3-cover.jpg 404 2.387 ms - 159
+> GET /img/tours/tour-2-cover.jpg 304 2.765 ms - -
+> Hello from the middleware 👋 
+> GET /img/tour-6-cover.jpg 404 1.974 ms - 159
+> Hello from the middleware 👋 
+> GET /img/tour-5-cover.jpg 404 1.699 ms - 159
+> GET /img/logo-green.png 304 0.394 ms - -
+> GET /img/icons.svg 304 0.280 ms - -
+> GET /img/favicon.png 304 0.366 ms - -
+> ```
+>
+> 
 
-
+### Environment variable 
