@@ -952,11 +952,49 @@ app.use(express.static(`${__dirname}/public`));
 > ```
 >
 
-### Environment variable 
+### Environment variables 
+
+> So node JS, or Express apps,can run in different environments.And the most important ones are the **development environmentand the production environment.**That's because depending on the environment,we might use different databases for example,or we might turn login on or off,or we might turn debugging on or off,or really all kinds of different settings that mightchange depending on the development that we're in.So again the most important ones are the **developmentand the production environment.**
 
 > server.js
 >
 > ```js
+> console.log(app.get('env'));
+> console.log(process.env);
 > ```
->
-> 
+
+> ```js
+> NODE_ENV=developement nodemon server.js
+> ```
+
+- `npm i dotenv`
+
+- `server.js `
+
+  ```js
+  const dotenv = require('dotenv');
+  dotenv.config({ path: './config.env'})
+  // console.log(app.get('env'));
+  console.log(process.env);
+  ```
+
+  ```bash
+    NODE_ENV: 'development',
+    PORT: '3000',
+    USERNAME: 'itsyuimorii✨',
+    PASSWORD: '123456'
+  }
+  ```
+
+- `app.js`
+
+  ```js
+  if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+  }
+  ```
+
+  
+
+  
+
