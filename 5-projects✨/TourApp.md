@@ -920,7 +920,7 @@ exports.checkBody = (req, res, next) => {
 app.use(express.static(`${__dirname}/public`));
 ```
 
-> http://127.0.0.1:3000/overview.html\
+> http://127.0.0.1:3000/overview.html
 >
 > ```js
 > //npm start
@@ -948,9 +948,15 @@ app.use(express.static(`${__dirname}/public`));
 > GET /img/tour-5-cover.jpg 404 1.699 ms - 159
 > GET /img/logo-green.png 304 0.394 ms - -
 > GET /img/icons.svg 304 0.280 ms - -
-> GET /img/favicon.png 304 0.366 ms - -
+> GET /img/favicon.png 304 0.366 ms - 
+> ```
+>
+
+### Environment variable 
+
+> server.js
+>
+> ```js
 > ```
 >
 > 
-
-### Environment variable 
