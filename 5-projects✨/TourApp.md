@@ -1039,5 +1039,44 @@ app.use(express.static(`${__dirname}/public`));
 > }
 > ```
 
-## mongoDB
+## 💛MongoDB
 
+“MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need” `database  -> colllections -> documents`
+
+> 👉 **Document based:** MongoDB stores data in documents (field-value pair data structures, NoSQL);
+>
+> 👉 **Scalable:** Very easy to distribute data across multiple machines as your users and amount of data grows;
+>
+> 👉 **Flexible:** No document data schema required, so each document can have different number and type of fields;
+>
+> 👉 **Performant:** Embedded data models, indexing, sharding, flexible documents, native duplication, etc.
+>
+> 👉 Free and open-source, published under the SSPL License.
+
+
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678463656/Screen_Shot_2023-03-10_at_9.53.41_AM_bxrsm4.png)
+
+Eg: So just imagine we had a **comments collection** which contained a bunch of comment documents.Each of them could actually look exactly like this,so with an author and with the comment text,but instead of doing that,we include these comments right into the blog post document,so in other words, we `embed the comment documents` right into the` post document` .So this process of `embedding, or de-normalizingas` we can also call it, is basically to include so, to embed, some related data all into one single document.
+
+In this example**, the comments are related to the post**,**and so they are included in the same document**.And this makes a database more `performant` in some situations because this way,it can be easier to *read all the data* that we need all at once.And this is something that we're gonna talk about a lot when learning about data **modeling**
+
+Now, **the opposite of embedding or de-normalizing,is normalizing,** and that's how the data is always modeled in relational databases. So in that case, it's not possible to embed data,and so **the solution is to create a whole new table for the comments and then join the tables by referencing to the ID field of the comments table.**Now we're not gonna use relational databases in this course, but I believe it's still importantto know the differences if you wanna becomea good back-end developer.
+
+Ttwo more things about **BSON documents**. First, the **maximum size** for each documentis currently 16 MB, but this might increase in the future.And second, each document contains a **unique ID**, which acts as a primary key of that document.It's automatically generated with the object ID data type each time there is a new document,and so we don't have to worry about it.  
+
+### Create a local database -mongoshell
+
+```js
+> use itsyuimoriiTours-test
+```
+
+> And so it created that database, and it also switched to it. Okay, and now this blank databaseis ready to receive some data.Now remember that inside a database we have collections,and then each collection has documents in it. 
+>
+> **And the data that we create in the Mongo Shell is always documents.**And so of course we have to `create the document inside of a collection`, 
+
+```js
+db.tours.insertMany()
+```
+
+> and so we **specify that collection before we insert a document**.And this works like this, so db, which stands for the current database, which is in this casenatours-test, and then we specify the name of the collectionwhich is tours, and then on thatwe use the insertMany function.So insertMany just like that, so just to recap here,Database is the currently used database that isright now active, and when we want to insert adocument into it we need to specify the collectionwhere that document is gonna live.And we do that by using dot, and thenthe name of the collection, which is in this case "tours".Now right now this collection hasn't been created,and so it will create it once we run this command, okay.
