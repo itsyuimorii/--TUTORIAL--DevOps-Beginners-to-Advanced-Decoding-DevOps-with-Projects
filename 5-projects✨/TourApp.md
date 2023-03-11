@@ -1068,7 +1068,7 @@ Ttwo more things about **BSON documents**. First, the **maximum size** for each 
 ### Create a local database -mongoshell
 
 ```js
-> use itsyuimoriiTours-test
+use itsyuimoriiTours-test
 ```
 
 > And so it created that database, and it also switched to it. Okay, and now this blank databaseis ready to receive some data.Now remember that inside a database we have collections,and then each collection has documents in it. 
@@ -1097,6 +1097,9 @@ db.tours.insertMany({name: 'The Forest Hiker', price: 297, rating: 4.7})
 
 ```js
 show collections
-
 ```
+
+### CRUD (querying)reading docuemnts
+
+`db.tours.find({difficulty: "easy"});` `db.tour.find({ price: {$lte:  500 })`
 
