@@ -554,3 +554,8 @@ module.exports = (temp, product) => {
 const replaceTemplate = require("./modules/replaceTemplate");
 ```
 
+### Creating a hosted database with ATLAS
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678463656/Screen_Shot_2023-03-10_at_9.53.41_AM_bxrsm4.png)
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678502617/Screen_Shot_2023-03-10_at_8.39.56_PM_fks8he.png)
