@@ -1156,7 +1156,7 @@ Connect with mongdb steel![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586728/Screen_Shot_2023-03-11_at_8.05.16_PM_bbjzot.png)
 
-## Mongo and Mongoose
+## 💛Mongo and Mongoose
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678590333/Screen_Shot_2023-03-11_at_9.04.47_PM_ynsynf.png)
 
@@ -1222,7 +1222,7 @@ mongoose
 // console.log(con.connection); can get the details of DB connection info
 ```
 
-### Mongoose theroy
+#### Mongoose theroy
 
 👉 Mongoose is an Object Data Modeling (ODM) library forMongoDB and Node.js, a higher level of abstraction;
 
@@ -1234,7 +1234,7 @@ mongoose
 
 👉 Mongoose model: a wrapper for the schema, providing aninterface to the database for CRUD operations.
 
-### Create Tours model
+#### Create Tours model
 
 #### Create schema
 
@@ -1263,6 +1263,7 @@ const Tour = mongoose.model('Tour', tourSchema);
 ```js
 const Tour = mongoose.model('Tour', tourSchema);
 
+//this code only can run one, the second time will be 11000 error💥
 const testTour = new Tour({
   name: 'The Forest Hiker',
   rating: 4.5,
@@ -1277,7 +1278,7 @@ testTour
   .catch((err) => console.log('ERROR💥:', err));
 ```
 
-> npm start , add new data to db
+> npm start , add new data to db 
 >
 > ```bash
 > {
@@ -1289,7 +1290,16 @@ testTour
 > }
 > ```
 >
-> 
+> ```js
+>  const testTour = new Tour({
+>     name: 'The Park Camper ',
+>  });
+> //error💥: _message: 'Tour validation failed'
+> ```
+
+### backend architecture - MVC 
+
+
 
 ###  
 

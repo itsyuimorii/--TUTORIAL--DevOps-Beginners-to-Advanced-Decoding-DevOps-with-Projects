@@ -36,10 +36,22 @@ const tourSchema = new mongoose.Schema({
 });
 const Tour = mongoose.model('Tour', tourSchema);
 
+//only run one time
+// const testTour = new Tour({
+//   name: 'The Forest Hiker',
+//   rating: 4.7,
+//   price: 497,
+// });
+
+// const testTour = new Tour({
+//   name: 'The Park Camper ',
+// });
+//error💥: _message: 'Tour validation failed'
+
 const testTour = new Tour({
-  name: 'The Forest Hiker',
-  rating: 4.5,
-  price: 497,
+  name: 'The Park Camper',
+  rating: 4.9,
+  price: 997,
 });
 
 testTour
