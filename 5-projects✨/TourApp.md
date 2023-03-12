@@ -1099,7 +1099,7 @@ db.tours.insertMany({name: 'The Forest Hiker', price: 297, rating: 4.7})
 show collections
 ```
 
-### CRUD (querying)reading docuemnts
+### CRUD (querying) Reading docuemnts
 
 `db.tours.find({difficulty: "easy"});` `db.tour.find({ price: {$lte:  500 })`
 
