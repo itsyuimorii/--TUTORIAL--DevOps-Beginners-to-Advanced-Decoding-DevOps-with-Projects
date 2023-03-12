@@ -1541,3 +1541,5 @@ exports.deleteTour = async (req, res) => {
 ```
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678642843/Screen_Shot_2023-03-12_at_12.40.21_PM_msjhtn.png)
+
+### Reference https://www.natours.dev/api/v1/tours
