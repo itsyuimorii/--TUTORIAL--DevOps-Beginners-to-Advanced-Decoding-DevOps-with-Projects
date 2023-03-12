@@ -1435,3 +1435,28 @@ exports.deleteTour = (req, res) => {
 
 ###  Another Way of Creating Documents
 
+### create newTour
+
+```js
+exports.createTour = async (req, res) => {
+  // const newTour = new Tour({});
+  // newTour.save();
+  try {
+    //Async function, return a Promise
+    const newTour = await Tour.create(req.body);
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        tour: newTour,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `fail`,
+    });
+  }
+};
+```
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678638073/Screen_Shot_2023-03-12_at_11.14.32_AM_jfcip8.png)

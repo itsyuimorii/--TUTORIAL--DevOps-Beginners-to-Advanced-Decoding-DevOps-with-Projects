@@ -22,13 +22,22 @@ exports.getTour = (req, res) => {
 exports.createTour = async (req, res) => {
   // const newTour = new Tour({});
   // newTour.save();
+  try {
+    //Async function, return a Promise
+    const newTour = await Tour.create(req.body);
 
-  //Async function, return a Promise
-  await Tour.create({}).then();
-
-  res.status(201).json({
-    status: 'success',
-  });
+    res.status(201).json({
+      status: 'success',
+      data: {
+        tour: newTour,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `fail`,
+      message: err,
+    });
+  }
 };
 
 exports.updateTour = (req, res) => {
