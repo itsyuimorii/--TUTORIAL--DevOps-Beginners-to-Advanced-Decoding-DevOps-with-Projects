@@ -1109,6 +1109,8 @@ show collections
 
 ### Create a hosted database with altas
 
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678463656/Screen_Shot_2023-03-10_at_9.53.41_AM_bxrsm4.png)
+
 #### create a new project
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678502523/Screen_Shot_2023-03-10_at_8.37.04_PM_tblzc0.png)
