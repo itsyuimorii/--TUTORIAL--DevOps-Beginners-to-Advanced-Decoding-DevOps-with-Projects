@@ -1136,7 +1136,7 @@ DATABASE_PASSWORD = XSCFFlZyw7PE4cxf
 
 ![Screen Shot 2023-03-11 at 7.55.51 PM](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586181/Screen_Shot_2023-03-11_at_7.55.51_PM_uj8it8.png)
 
-check the data just created on Altas
+#### check the data just created on Altas
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586288/Screen_Shot_2023-03-11_at_7.57.11_PM_wn3s6b.png)
 
@@ -1148,7 +1148,9 @@ check the data just created on Altas
 
 #### connect altas with mongoShell
 
-![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586614/Screen_Shot_2023-03-11_at_7.46.49_PM_vitbn7.png)
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678590333/Screen_Shot_2023-03-11_at_9.04.47_PM_ynsynf.png)
+
+Connect with mongdb steel![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586614/Screen_Shot_2023-03-11_at_7.46.49_PM_vitbn7.png)
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586703/Screen_Shot_2023-03-11_at_8.04.28_PM_nglq3h.png)
 
@@ -1156,29 +1158,41 @@ check the data just created on Altas
 
 ## Mongo and Mongoose
 
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678590333/Screen_Shot_2023-03-11_at_9.04.47_PM_ynsynf.png)
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678590333/Screen_Shot_2023-03-11_at_9.04.51_PM_szxtt5.png)
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678590511/Screen_Shot_2023-03-11_at_9.07.59_PM_mo11ll.png)
+
 #### Configuration `config.env`
 
+> Config.env
+
 ```js
-DATABASE=mongosh "mongodb+srv://cluster0.pto1wr6.mongodb.net/itsyuimoriiTours" --apiVersion 1 --username itsyuimorii
+NODE_ENV=development
+PORT=3000
+# USERNAME=itsyuimorii✨
+# PASSWORD=123456
+
+DATABASE=mongodb+srv://itsyuimorii:<PASSWORD>@cluster0.pto1wr6.mongodb.net/itsyuimoriiTours?retryWrites=true&w=majority
 
 DATABASE_PASSWORD = XSCFFlZyw7PE4cxf
-
 ```
+
+> ⁉️Be sure to add `database name` `itsyuimoriiTours` here after `/`
 
 #### install mongoose
 
 ```js
-npm i mongoose@5
+npm i mongoose@5.5.2
 ```
 
 > server.js
 
 ```js
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+ 
 
-dotenv.config({ path: './config.env' });
-const app = require('./app');
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -1188,23 +1202,9 @@ const DB = process.env.DATABASE.replace(
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
+    useUnifiedTopology: true,
   })
   .then(() => console.log('DB connection successful!'));
-
-// console.log(app.get('env'));
-console.log(process.env);
-
-// 4) START SERVER
-const port = process.env.PORT || 3000;
-app.listen(port, (error) => {
-  if (!error)
-    console.log(
-      `Server is Successfully Running, and App is listening on port ${port}...`
-    );
-  else console.log("Error occurred, server can't start", error);
-});
 
 ```
 
