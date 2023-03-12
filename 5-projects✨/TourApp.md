@@ -1156,3 +1156,10 @@ check the data just created on Altas
 
 ## Mongo and Mongoose
 
+```js
+DATABASE=mongosh "mongodb+srv://cluster0.pto1wr6.mongodb.net/itsyuimoriiTours" --apiVersion 1 --username itsyuimorii
+
+DATABASE_PASSWORD = XSCFFlZyw7PE4cxf
+
+```
+
