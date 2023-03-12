@@ -1103,3 +1103,53 @@ show collections
 
 `db.tours.find({difficulty: "easy"});` `db.tour.find({ price: {$lte:  500 })`
 
+
+
+
+
+### Create a hosted database with altas
+
+#### create a new project
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678502523/Screen_Shot_2023-03-10_at_8.37.04_PM_tblzc0.png)
+
+#### create username & password
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678502617/Screen_Shot_2023-03-10_at_8.39.56_PM_fks8he.png)
+
+#### copy the password to local file `config.env`
+
+```
+NODE_ENV=development
+PORT=3000
+# USERNAME=itsyuimorii✨
+# PASSWORD=123456
+
+DATABASE_PASSWORD = XSCFFlZyw7PE4cxf
+```
+
+#### Add data into this database 
+
+![Screen Shot 2023-03-11 at 7.39.26 PM](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586181/Screen_Shot_2023-03-11_at_7.39.26_PM_irjbzu.png)
+
+#### Insert data
+
+![Screen Shot 2023-03-11 at 7.55.51 PM](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586181/Screen_Shot_2023-03-11_at_7.55.51_PM_uj8it8.png)
+
+check the data just created on Altas
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586288/Screen_Shot_2023-03-11_at_7.57.11_PM_wn3s6b.png)
+
+#### allow access from everywhere
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678585699/Screen_Shot_2023-03-11_at_7.47.41_PM_r0nmr7.png)
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678585773/node.js notes/Screen_Shot_2023-03-11_at_7.49.16_PM_jtcwwk.png)
+
+#### connect altas with mongoShell
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586614/Screen_Shot_2023-03-11_at_7.46.49_PM_vitbn7.png)
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586703/Screen_Shot_2023-03-11_at_8.04.28_PM_nglq3h.png)
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678586728/Screen_Shot_2023-03-11_at_8.05.16_PM_bbjzot.png)
