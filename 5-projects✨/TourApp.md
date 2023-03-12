@@ -1522,16 +1522,14 @@ exports.getTour = async (req, res) => {
 ### UpdateTour with Mongoose 
 
 ```js
-
-exports.updateTour = async (req, res) => {
+exports.deleteTour = async (req, res) => {
   try {
     //query the documents
-    const updateTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidator: true,
-    });
-    res.status(200).json({
+    //So in this case, we actually don't save anything to any variable because remember, we actually don't send anything back to the client
+    await Tour.findByIdAndDelete(req.params.id);
+    res.status(204).json({
       status: 'success',
+      data: null,
     });
   } catch (err) {
     res.status(400).json({
@@ -1542,3 +1540,4 @@ exports.updateTour = async (req, res) => {
 };
 ```
 
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678642843/Screen_Shot_2023-03-12_at_12.40.21_PM_msjhtn.png)
