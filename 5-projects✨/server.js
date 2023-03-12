@@ -35,6 +35,14 @@ const tourSchema = new mongoose.Schema({
   },
 });
 
+const Tour = mongoose.model('Tour', tourSchema);
+
+
+cosnt testTour = new Tour({
+  name: 'The Forest Hiker',
+  rating: 4.7,
+  price: 497
+})
 // console.log(app.get('env'));
 // console.log(process.env);
 

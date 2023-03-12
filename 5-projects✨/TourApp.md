@@ -1236,6 +1236,8 @@ mongoose
 
 ### Create Tours model
 
+#### Create schema
+
 ```js
 const tourSchema = new mongoose.Schema({
   name: {
@@ -1252,13 +1254,15 @@ const tourSchema = new mongoose.Schema({
     required: [true, `A tour must have a price`],
   },
 });
+
+const Tour = mongoose.model('Tour', tourSchema);
 ```
 
+####  Creating documents and testing the model
 
 
-  name: *String*,
 
-  rating: *Number*,
+###  
 
   price: *Number*,
 
