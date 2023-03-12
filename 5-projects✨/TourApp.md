@@ -1265,7 +1265,7 @@ const Tour = mongoose.model('Tour', tourSchema);
 
 const testTour = new Tour({
   name: 'The Forest Hiker',
-  rating: 4.7,
+  rating: 4.5,
   price: 497,
 });
 
@@ -1277,7 +1277,19 @@ testTour
   .catch((err) => console.log('ERROR💥:', err));
 ```
 
-
+> npm start , add new data to db
+>
+> ```bash
+> {
+>   rating: '4.5',
+>   _id: 640d57ccf040722ada917d32,
+>   name: 'The Forest Hiker',
+>   price: 497,
+>   __v: 0
+> }
+> ```
+>
+> 
 
 ###  
 
