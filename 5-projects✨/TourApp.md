@@ -1208,3 +1208,40 @@ mongoose
 
 ```
 
+```js
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((con) => {
+    console.log('DB connection successful!');
+    console.log(con.connection);
+  });
+
+// console.log(con.connection); can get the details of DB connection info
+```
+
+### Mongoose theroy
+
+👉 Mongoose is an Object Data Modeling (ODM) library forMongoDB and Node.js, a higher level of abstraction;
+
+👉 Mongoose allows for rapid and simple development ofmongoDB database interactions;
+
+👉 Features: schemas to model data and relationships, easydata validation, simple query API, middleware, etc;
+
+👉 Mongoose schema: where we model our data, by describingthe structure of the data, default values, and validation;
+
+👉 Mongoose model: a wrapper for the schema, providing aninterface to the database for CRUD operations.
+
+### Create Tours model
+
+*const* tourSchema = new mongoose.Schema({
+
+  name: *String*,
+
+  rating: *Number*,
+
+  price: *Number*,
+
+});

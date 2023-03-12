@@ -12,13 +12,21 @@ const DB = process.env.DATABASE.replace(
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
-
     useUnifiedTopology: true,
   })
-  .then(() => console.log('DB connection successful!'));
+  .then((con) => {
+    console.log('DB connection successful!');
+    // console.log(con.connection);
+  });
+
+const tourSchema = new mongoose.Schema({
+  name: String,
+  rating: Number,
+  price: Number,
+});
 
 // console.log(app.get('env'));
-//console.log(process.env);
+// console.log(process.env);
 
 // 4) START SERVER
 const port = process.env.PORT || 3000;
