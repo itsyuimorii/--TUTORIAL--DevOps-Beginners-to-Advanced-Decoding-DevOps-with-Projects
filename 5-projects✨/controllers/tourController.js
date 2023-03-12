@@ -1,24 +1,41 @@
 const Tour = require('../models/tourModel');
 
 // 2) ROUTE HANDLER
-exports.getAllTours = (req, res) => {
-  console.log(req.requestTime);
+exports.getAllTours = async (req, res) => {
+  //return all the documents in this collection
+  try {
+    //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
 
-  res.status(200).json({
-    status: 'success',
-    requestedAt: req.requestTime,
-  });
+    const getAllTours = await Tour.find();
+    res.status(200).json({
+      status: 'success',
+      //result measures the number of results that are in the tours
+      result: getAllTours.length,
+      //this data property here to envelope the tours.
+      data: {
+        tours: getAllTours,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
 };
 
-exports.getTour = (req, res) => {
-  console.log(req.params);
-  const id = req.params.id * 1;
-
-  // res.status(200).json({
-  //   status: 'success',
-  // });
+exports.getTour = async (req, res) => {
+  try {
+    const getTour = await Tour.findById(req.params.id);
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
 };
 
+//create document with mongoose
 exports.createTour = async (req, res) => {
   // const newTour = new Tour({});
   // newTour.save();

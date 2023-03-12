@@ -1433,9 +1433,7 @@ exports.deleteTour = (req, res) => {
 };
 ```
 
-###  Another Way of Creating Documents
-
-### create newTour
+### Creating Documents with Mongoose
 
 ```js
 exports.createTour = async (req, res) => {
@@ -1460,3 +1458,34 @@ exports.createTour = async (req, res) => {
 ```
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678638073/Screen_Shot_2023-03-12_at_11.14.32_AM_jfcip8.png)
+
+### Reading Documents with Mongoose 
+
+> in order to implement or get tour and get all tour's route handlers.
+
+```js
+exports.getAllTours = async (req, res) => {
+  //return all the documents in this collection
+  try {
+    //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
+
+    const getAllTours = await Tour.find();
+    res.status(200).json({
+      status: 'success',
+      //result measures the number of results that are in the tours
+      result: getAllTours.length,
+      //this data property here to envelope the tours.
+      data: {
+        tours: getAllTours,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+```
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678640381/Screen_Shot_2023-03-12_at_11.58.57_AM_awsqqc.png)
