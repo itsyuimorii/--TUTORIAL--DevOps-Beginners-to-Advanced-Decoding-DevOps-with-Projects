@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Tour = require('../models/tourModel');
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
@@ -74,7 +75,7 @@ exports.createTour = (req, res) => {
   //console.log(req.body);
   const newId = tours[tours.length - 1].id + 1;
   //create a new object by merging two existing objects
-  const newTour = Object.assign({ id: newId }, req.body);
+  const newTour = Object.assign(`{ id: newId }`, req.body);
   //push this tour into the tour array
   tours.push(newTour);
   //persist that into file,using fs.writeFileSync
