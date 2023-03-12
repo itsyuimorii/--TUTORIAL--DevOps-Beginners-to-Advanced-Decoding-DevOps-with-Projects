@@ -1489,3 +1489,30 @@ exports.getAllTours = async (req, res) => {
 ```
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678640381/Screen_Shot_2023-03-12_at_11.58.57_AM_awsqqc.png)
+
+### GetTour
+
+```js
+exports.getTour = async (req, res) => {
+  try {
+    const getTour = await Tour.findById(req.params.id);
+    //Tour.findOne({_id: req.params.id})
+    res.status(200).json({
+      status: 'success',
+      data: {
+        getTour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: `fail`,
+      message: err,
+    });
+  }
+};
+
+```
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678640883/Screen_Shot_2023-03-12_at_12.07.12_PM_w969zt.png)
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678641164/Screen_Shot_2023-03-12_at_12.11.29_PM_vnqouf.png)
