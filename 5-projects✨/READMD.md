@@ -477,8 +477,6 @@ app
 
 > In fact, we have used middleware before. We use Express to point JSON to access the request body on the request object (body.parser). In fact, we can say that in Express, everything is middleware.**The initial request and response object progressively traverses each middleware.**
 
-![Screen Shot 2023-03-09 at 10.54.59 AM](/Users/yuimorii/Desktop/Screen Shot 2023-03-09 at 10.54.59 AM.png)
-
 ### Create Middleware function
 
 ```js 
@@ -1543,3 +1541,13 @@ exports.deleteTour = async (req, res) => {
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678642843/Screen_Shot_2023-03-12_at_12.40.21_PM_msjhtn.png)
 
 ### Reference https://www.natours.dev/api/v1/tours
+
+## Importing Development Data
+
+> create a script import  JSON into dababase
+>
+> ```js
+> ```
+>
+> 
+
