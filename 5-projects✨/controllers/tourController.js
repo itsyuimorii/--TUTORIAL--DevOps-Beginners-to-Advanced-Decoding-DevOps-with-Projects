@@ -33,11 +33,11 @@ exports.getAllTours = (req, res) => {
     //JSend data formations
     status: 'success',
     requestedAt: req.requestTime,
-    results: tours.length,
-    data: {
-      //   tours: tours,
-      tours: tours,
-    },
+    // results: tours.length,
+    // data: {
+    //   //   tours: tours,
+    //   tours: tours,
+    // },
   });
 };
 
@@ -48,7 +48,7 @@ exports.getTour = (req, res) => {
   const id = req.params.id * 1;
 
   //loop through the array,and in each of the iterations,we will have access to the current element,and we will return either true or false in each of the iterations
-  const tour = tours.find((el) => el.id === id);
+  //const tour = tours.find((el) => el.id === id);
 
   //check if the id is not existing
   // if (!tour) {
@@ -58,18 +58,22 @@ exports.getTour = (req, res) => {
   //   });
   // }
 
-  res.status(200).json({
-    //JSend data formations
-    status: 'success',
+  // res.status(200).json({
+  //   //JSend data formations
+  //   status: 'success',
 
-    data: {
-      //   tours: tours,
-      tour: tour,
-    },
+  //   data: {
+  //     //   tours: tours,
+  //     tour: tour,
+  //   },
+  // });
+};
+exports.createTour = (req, res) => {
+  res.status(200).json({
+    status: 'success',
   });
 };
-
-exports.createTour = (req, res) => {
+/* exports.createTour = (req, res) => {
   //the data from the body in the console, just to verify that it actually works, so req.body.
   //get data from the body in the console
   //console.log(req.body);
@@ -92,7 +96,7 @@ exports.createTour = (req, res) => {
     }
   );
   //res.send('Done');
-};
+}; */
 
 exports.updateTour = (req, res) => {
   //check if the id is not existing
