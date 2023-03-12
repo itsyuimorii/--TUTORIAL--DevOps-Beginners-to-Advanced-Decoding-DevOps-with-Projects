@@ -108,9 +108,9 @@ exports.updateTour = (req, res) => {
   // }
   res.status(200).json({
     status: 'success',
-    data: {
-      tour: '<Updated tour here...>',
-    },
+    // data: {
+    //   tour: '<Updated tour here...>',
+    // },
   });
 };
 
