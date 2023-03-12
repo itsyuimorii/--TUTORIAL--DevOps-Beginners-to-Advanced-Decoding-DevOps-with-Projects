@@ -1260,11 +1260,13 @@ mongoose
 
 👉 Mongoose model: a wrapper for the schema, providing aninterface to the database for CRUD operations.
 
-#### Create Tours model
+#### [Mongoose API](https://mongoosejs.com/docs/api/mongoose.html)
 
-#### Create schema
+####  Create schema
 
 ```js
+const mongoose = require('mongoose');
+
 const tourSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -1281,7 +1283,7 @@ const tourSchema = new mongoose.Schema({
   },
 });
 
-const Tour = mongoose.model('Tour', tourSchema);
+
 ```
 
 ####  Creating documents and testing the model
@@ -1433,7 +1435,7 @@ exports.deleteTour = (req, res) => {
 };
 ```
 
-### Creating Documents with Mongoose
+### Creating Documents
 
 ```js
 exports.createTour = async (req, res) => {
@@ -1490,7 +1492,7 @@ exports.getAllTours = async (req, res) => {
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678640381/Screen_Shot_2023-03-12_at_11.58.57_AM_awsqqc.png)
 
-### GetTour
+### GetTour with Mongoose 
 
 ```js
 exports.getTour = async (req, res) => {
@@ -1516,3 +1518,27 @@ exports.getTour = async (req, res) => {
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678640883/Screen_Shot_2023-03-12_at_12.07.12_PM_w969zt.png)
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678641164/Screen_Shot_2023-03-12_at_12.11.29_PM_vnqouf.png)
+
+### UpdateTour with Mongoose 
+
+```js
+
+exports.updateTour = async (req, res) => {
+  try {
+    //query the documents
+    const updateTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidator: true,
+    });
+    res.status(200).json({
+      status: 'success',
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `fail`,
+      message: err,
+    });
+  }
+};
+```
+
