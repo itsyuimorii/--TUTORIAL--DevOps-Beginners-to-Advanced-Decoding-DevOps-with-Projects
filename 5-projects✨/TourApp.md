@@ -679,6 +679,28 @@ userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 >   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 > );
 > 
+> exports.checkID = (req, res, next, val) => {
+>   //check if the id is not existing
+>   console.log(`Tour id is: ${val}`);
+>   if (req.params.id * 1 > tours.length) {
+>     return res.status(404).json({
+>       status: 'fail',
+>       message: 'Invalid ID',
+>     });
+>   }
+>   next();
+> };
+> 
+> exports.checkBody = (req, res, next) => {
+>   if (!req.body.name || !req.body.price) {
+>     return res.status(400).json({
+>       status: 'fail',
+>       message: 'Missing name or price',
+>     });
+>   }
+>   next();
+> };
+> 
 > // 2) ROUTE HANDLER
 > exports.getAllTours = (req, res) => {
 >   res.status(200).json({
@@ -703,12 +725,12 @@ userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 >   const tour = tours.find((el) => el.id === id);
 > 
 >   //check if the id is not existing
->   if (!tour) {
->     return res.status(404).json({
->       status: 'Not Found',
->       message: 'Invalid ID',
->     });
->   }
+>   // if (!tour) {
+>   //   return res.status(404).json({
+>   //     status: 'Not Found',
+>   //     message: 'Invalid ID',
+>   //   });
+>   // }
 > 
 >   res.status(200).json({
 >     //JSend data formations
@@ -727,7 +749,7 @@ userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 >   //console.log(req.body);
 >   const newId = tours[tours.length - 1].id + 1;
 >   //create a new object by merging two existing objects
->   const newTour = Object.assign({ id: newId }, req.body);
+>   const newTour = Object.assign(`{ id: newId }`, req.body);
 >   //push this tour into the tour array
 >   tours.push(newTour);
 >   //persist that into file,using fs.writeFileSync
@@ -748,12 +770,12 @@ userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 > 
 > exports.updateTour = (req, res) => {
 >   //check if the id is not existing
->   if (req.params.id * 1 > tours.length) {
->     return res.status(404).json({
->       status: 'failed',
->       message: 'Invalid ID',
->     });
->   }
+>   // if (req.params.id * 1 > tours.length) {
+>   //   return res.status(404).json({
+>   //     status: 'failed',
+>   //     message: 'Invalid ID',
+>   //   });
+>   // }
 >   res.status(200).json({
 >     status: 'success',
 >     data: {
@@ -763,18 +785,19 @@ userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 > };
 > 
 > exports.deleteTour = (req, res) => {
->   //check if the id is not existing
->   if (req.params.id * 1 > tours.length) {
->     return res.status(404).json({
->       status: 'failed',
->       message: 'Invalid ID',
->     });
->   }
+>   // //check if the id is not existing
+>   // if (req.params.id * 1 > tours.length) {
+>   //   return res.status(404).json({
+>   //     status: 'failed',
+>   //     message: 'Invalid ID',
+>   //   });
+>   // }
 >   res.status(204).json({
 >     status: 'success',
 >     data: null,
 >   });
 > };
+> 
 > ```
 
 > controllers/userController.js
@@ -814,6 +837,7 @@ userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 >     message: 'this route is not yet defined!',
 >   });
 > };
+> 
 > ```
 
 > server.js
@@ -1299,7 +1323,7 @@ testTour
 > //error💥: _message: 'Tour validation failed'
 > ```
 
-### backend architecture - MVC 
+## Backend architecture - MVC 
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678596837/Screen_Shot_2023-03-11_at_10.53.38_PM_frtc08.png) 
 
@@ -1331,4 +1355,83 @@ Also, if we have views in our app,the **application logic serves as a bridge bet
 
 Now, we need to keep in mind that application logic and business logic are almost impossible to completely separate,and so sometimes they will overlap.But we should do our best effortsto keep the application logic in our controllers and business logic in our models.And there is even this philosophy offat models, thin controllers,which says we should offload as much logic as possible into the models,to keep the controllers as simple and lean as possible.So a fat model will have as much business logicas we can offload to it,and a thin controller will have as little logic as possible,so that the **controller is really mostly for managing the application's requests and responses.** 
 
- 
+###  Refactoring MVC
+
+> Routes/tourRoutes.js
+
+```js
+const express = require('express');
+
+const tourController = require('../controllers/tourController');
+
+const router = express.Router();
+
+/* use this .param function here to define parameter middleware in your own applications  */
+// router.param('id', tourController.checkID);
+
+router
+  .route('/')
+  .get(tourController.getAllTours)
+  .post(tourController.checkBody, tourController.createTour);
+router
+  .route('/:id')
+  .get(tourController.getTour)
+  .patch(tourController.createTour)
+  .delete(tourController.deleteTour);
+
+module.exports = router;
+
+```
+
+> controllers/tourController.js
+
+```js
+const Tour = require('../models/tourModel');
+
+exports.checkBody = (req, res, next) => {
+  if (!req.body.name || !req.body.price) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Missing name or price',
+    });
+  }
+  next();
+};
+
+// 2) ROUTE HANDLER
+exports.getAllTours = (req, res) => {
+  console.log(req.requestTime);
+
+  res.status(200).json({
+    status: 'success',
+    requestedAt: req.requestTime,
+  });
+};
+
+exports.getTour = (req, res) => {
+  console.log(req.params);
+  const id = req.params.id * 1;
+};
+
+exports.createTour = (req, res) => {
+  res.status(201).json({
+    status: 'success',
+  });
+};
+
+exports.updateTour = (req, res) => {
+  res.status(200).json({
+    status: 'success',
+  });
+};
+
+exports.deleteTour = (req, res) => {
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+};
+```
+
+###  Another Way of Creating Documents
+

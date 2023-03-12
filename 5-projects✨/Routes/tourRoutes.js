@@ -4,18 +4,8 @@ const tourController = require('../controllers/tourController');
 
 const router = express.Router();
 
-router.param('id', tourController.checkID);
-
-// router.param('id', (req, res, next, val) => {
-//   //console.log(`Tour id is: ${val}`);
-//   next();
-// });
-
-//Create a checkBody middleware
-
-//Check if body contains the name and price properties
-//if not, send back 404 (bad request)
-//Add it to the post handler stack
+/* use this .param function here to define parameter middleware in your own applications  */
+// router.param('id', tourController.checkID);
 
 router
   .route('/')
