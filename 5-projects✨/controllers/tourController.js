@@ -3,6 +3,7 @@ const Tour = require('../models/tourModel');
 // 2) ROUTE HANDLER
 exports.getAllTours = async (req, res) => {
   //return all the documents in this collection
+  console.log(req.query);
   try {
     //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
 
@@ -15,7 +16,9 @@ exports.getAllTours = async (req, res) => {
     const query = await Tour.find(queryObj);
 
     //EXECUTE QUERY
-    const tours = await query;
+    const getAllTours = await query;
+
+    //
 
     res.status(200).json({
       status: 'success',
