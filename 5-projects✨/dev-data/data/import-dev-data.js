@@ -22,7 +22,9 @@ mongoose
 
 //READ JSON FILE
 //parse json file into javascript object
-const tours = JSON.parse(fs.readFileSync('tours-simple.json', 'utf-8'));
+const tours = JSON.parse(
+  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
+);
 
 //IMPORT JSON DATA INTO DB
 const importData = async () => {
@@ -43,3 +45,9 @@ const deleteData = async () => {
     console.log(error);
   }
 };
+
+if (process.argv[2] === '--import') {
+  importData();
+} else if (process.argv[2] === '--delete') {
+  deleteData();
+}
