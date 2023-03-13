@@ -1637,7 +1637,7 @@ exports.getAllTours = async (req, res) => {
 
 ### Making an API better: Advanced Filtering
 
-using advance filter such as greater than, less than.... to filter querying, so 
+- Using advance filter such as greater than, less than.... to filter querying, so 
 
 ```js
 const Tour = require('../models/tourModel');
@@ -1693,4 +1693,10 @@ exports.getAllTours = async (req, res) => {
 };
 ```
 
+> Test: `127.0.0.1:3000/api/v1/tours?duration[gte]=5&difficulty=easy`
+
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678728132/Screen_Shot_2023-03-13_at_12.20.31_PM_gdxuzp.png)
+
+### Making an API better: Sorting
+
+- Sorting by price
