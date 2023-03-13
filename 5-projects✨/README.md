@@ -118,9 +118,9 @@ app.get("/api/v1/tours", (req, res) => {
 
 ### handling POST request
 
-> remember that with a post request, we can **send data from the client to the server**, This data is then ideally available on the request. The request object again is what holds all the data, all the information, about the request that was done.
+remember that with a post request, we can **send data from the client to the server**, This data is then ideally available on the request. The request object again is what holds all the data, all the information, about the request that was done.
 
-> **Middleware**: It's called middleware because it stands between,so in the middle of the request and the response. And the step the requests go through, in this example is simply that the data from the body is added to it.So it's added to the request object by using this middleware.
+**Middleware**: It's called middleware because it stands between,so in the middle of the request and the response. And the step the requests go through, in this example is simply that the data from the body is added to it.So it's added to the request object by using this middleware.
 
 ```js
 app.post("/api/v1/tours", (req, res) => {
@@ -135,7 +135,7 @@ app.post("/api/v1/tours", (req, res) => {
 
 ### Persist the data into JSON file(fictional database)
 
-> when we create a new object, we never specify the id of the object. The database usually takes care of that.
+when we create a new object, we never specify the id of the object. The database usually takes care of that.
 
 ```js
 app.post("/api/v1/tours", (req, res) => {
@@ -150,9 +150,9 @@ app.post("/api/v1/tours", (req, res) => {
 });
 ```
 
-> why use fs.writefile instead of fs.writefileSync ?
->
-> We are inside of a call-back function, that is gonna run in the event loop. We can never, ever block the event loop.What we're gonna do is to use writeFile and not to Sync in this one. We want to pass in a call-back function that is gonna be processed in the background and as soon as it's ready, t's gonna put its event in one of the event loop queue, which is then gonna be handled as soon as the event loop passes that phase. Anyway, let's get the file name from up here, because we will really override this file o that when we restart this server, it's then gonna be there
+why use fs.writefile instead of fs.writefileSync ?
+
+We are inside of a call-back function, that is gonna run in the event loop. We can never, ever block the event loop.What we're gonna do is to use writeFile and not to Sync in this one. We want to pass in a call-back function that is gonna be processed in the background and as soon as it's ready, t's gonna put its event in one of the event loop queue, which is then gonna be handled as soon as the event loop passes that phase. Anyway, let's get the file name from up here, because we will really override this file o that when we restart this server, it's then gonna be there
 
 ```js
 const tours = JSON.parse(
@@ -206,7 +206,7 @@ app.get('/api/v1/tours/:id', (req, res) => {
 const id = req.params.id * 1;
 ```
 
-> when we multiply a string that looks like a number,when we multiply that with another number,it will then automatically convert that string to a number.
+- when we multiply a string that looks like a number,when we multiply that with another number,it will then automatically convert that string to a number.
 
 - loop through the array,and in each of the iterations,we will have access to the current element,and we will return either true or false in each of the iterations
 
@@ -214,8 +214,8 @@ const id = req.params.id * 1;
 const tour = tours.find((el) => el.id === id);
 ```
 
-> Now what the find method will then dois that basically, it will create an arraywhich only contains the elementwhere this comparison here turns out to be true, all right?And in this situation, we want to find the elementwhere the ID is equal to the onethat we get from the parameters.And so by specifying this callback function herewith this comparison, we will ensurethat only the element where the ID is actually equalto the specified ID in the parameterswill get returned from the find methodand stored into tour, all right?
->
+Now what the find method will then dois that basically, it will create an arraywhich only contains the elementwhere this comparison here turns out to be true, all right?And in this situation, we want to find the elementwhere the ID is equal to the onethat we get from the parameters.And so by specifying this callback function herewith this comparison, we will ensurethat only the element where the ID is actually equalto the specified ID in the parameterswill get returned from the find methodand stored into tour, all right?
+
 > ![image](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678340395/node.js%20notes/Screen_Shot_2023-03-08_at_11.39.27_PM_sokdhl.png)
 
 ```js
@@ -467,7 +467,7 @@ app
 
 ### Middleware and the Request-Response circle
 
-> In fact, we have used middleware before. We use Express to point JSON to access the request body on the request object (body.parser). In fact, we can say that in Express, everything is middleware.**The initial request and response object progressively traverses each middleware.**
+In fact, we have used middleware before. We use Express to point JSON to access the request body on the request object (body.parser). In fact, we can say that in Express, everything is middleware.**The initial request and response object progressively traverses each middleware.**
 
 ### Create Middleware function
 
@@ -851,18 +851,18 @@ userRouter.route("/:id").get(getUser).patch(updateUser).delete(deleteUser);
 
 ### Param middleware
 
-> So param middleware is middleware that only runs for certain parameters, so basically, when we have a certain parameter in our URL. Now in our example here, the only parameter that we might have in our route URL is the id, right?
->
+So param middleware is middleware that only runs for certain parameters, so basically, when we have a certain parameter in our URL. Now in our example here, the only parameter that we might have in our route URL is the id, right?
+
 > ```js
-> router.route("/:id");
+>router.route("/:id");
 > ```
->
+> 
 > ```js
-> router.param("id", (req, res, next, val) => {
->   console.log(`Tour id is: ${val}`);
->   next();
-> });
-> ```
+>router.param("id", (req, res, next, val) => {
+> console.log(`Tour id is: ${val}`);
+> next();
+>   });
+>   ```
 
 Using it to check valid ID
 
@@ -896,8 +896,8 @@ exports.checkID = (req, res, next, val) => {
 ### Chaining multiple middleware functions for same route
 
 > Routes/tourRoutes.js
->
-> if its post request, it will run this middleware => tourController.checkBody
+
+if its post request, it will run this middleware => tourController.checkBody
 
 ```js
 router
@@ -959,7 +959,7 @@ app.use(express.static(`${__dirname}/public`));
 
 ### ⁉️ Environment variables
 
-> So node JS, or Express apps,can run in different environments.And the most important ones are the **development environmentand the production environment.**That's because depending on the environment,we might use different databases for example,or we might turn login on or off,or we might turn debugging on or off,or really all kinds of different settings that mightchange depending on the development that we're in.So again the most important ones are the **developmentand the production environment.**
+So node JS, or Express apps,can run in different environments.And the most important ones are the **development environmentand the production environment.**That's because depending on the environment,we might use different databases for example,or we might turn login on or off,or we might turn debugging on or off,or really all kinds of different settings that mightchange depending on the development that we're in.So again the most important ones are the **developmentand the production environment.**
 
 > server.js
 >
@@ -1048,17 +1048,17 @@ app.use(express.static(`${__dirname}/public`));
 
 “MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need” `database  -> colllections -> documents`
 
-> 👉 **Document based:** MongoDB stores data in documents (field-value pair data structures, NoSQL);
->
-> 👉 **Scalable:** Very easy to distribute data across multiple machines as your users and amount of data grows;
->
-> 👉 **Flexible:** No document data schema required, so each document can have different number and type of fields;
->
-> 👉 **Performant:** Embedded data models, indexing, sharding, flexible documents, native duplication, etc.
->
-> 👉 Free and open-source, published under the SSPL License.
+👉 **Document based:** MongoDB stores data in documents (field-value pair data structures, NoSQL);
 
-![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678463656/Screen_Shot_2023-03-10_at_9.53.41_AM_bxrsm4.png)
+👉 **Scalable:** Very easy to distribute data across multiple machines as your users and amount of data grows;
+
+👉 **Flexible:** No document data schema required, so each document can have different number and type of fields;
+
+👉 **Performant:** Embedded data models, indexing, sharding, flexible documents, native duplication, etc.
+
+👉 **Free and open-source,** published under the SSPL License.
+
+![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678463656/node.js%20notes/Screen_Shot_2023-03-10_at_9.53.41_AM_bxrsm4.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678463656/node.js notes/Screen_Shot_2023-03-10_at_9.53.41_AM_bxrsm4.png)
 
 Eg: So just imagine we had a **comments collection** which contained a bunch of comment documents.Each of them could actually look exactly like this,so with an author and with the comment text,but instead of doing that,we include these comments right into the blog post document,so in other words, we `embed the comment documents` right into the` post document` .So this process of `embedding, or de-normalizingas` we can also call it, is basically to include so, to embed, some related data all into one single document.
 
@@ -1573,3 +1573,10 @@ exports.deleteTour = async (req, res) => {
 > node dev-data/data/import-dev-data.js --import
 > node dev-data/data/import-dev-data.js --delete
 > ```
+
+### Making an API better, Filtering
+
+```js
+ 127.0.0.1:3000/api/v1/tours?duration=5&difficulty=easy
+```
+
