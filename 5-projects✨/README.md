@@ -1574,9 +1574,9 @@ exports.deleteTour = async (req, res) => {
 > node dev-data/data/import-dev-data.js --delete
 > ```
 
-### Making an API better, Filtering
+### Making an API better: Filtering
 
 ```js
- 127.0.0.1:3000/api/v1/tours?duration=5&difficulty=easy
+127.0.0.1:3000/api/v1/tours?duration=5&difficulty=easy
 ```
 
