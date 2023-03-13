@@ -8,22 +8,27 @@ exports.getAllTours = async (req, res) => {
     //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
 
     //BUILD QUERY
-    // 1)Filtering
+    // 1A) Filtering
     const queryObj = { ...req.query };
-    const excludeFileds = ['page', 'sort', 'limit', 'fields'];
-    excludeFileds.forEach((el) => delete queryObj[el]);
-    // console.log(req.query, queryObj, excludeFileds);
+    const excludeFields = ['page', 'sort', 'limit', 'fields'];
+    excludeFields.forEach((el) => delete queryObj[el]);
+    // console.log(req.query, queryObj, excludeFields);
+    // const query = Tour.find(queryObj);
 
-    // 2) Advanced filtering
+    // 1B) Advanced filtering
 
     let queryStr = JSON.stringify(queryObj);
     //using regex expressions
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
     console.log(JSON.parse(queryStr));
 
-    // const query = Tour.find(queryObj);
+    let query = Tour.find(JSON.parse(queryStr));
 
-    const query = Tour.find(JSON.parse(queryStr));
+    // 2) Sorting
+    if (req.query.sort) {
+      query = query.sort(req.query.sort);
+    }
+
     //EXECUTE QUERY
     const getAllTours = await query;
 
