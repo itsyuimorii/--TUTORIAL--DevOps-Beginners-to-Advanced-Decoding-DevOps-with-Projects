@@ -1638,3 +1638,59 @@ exports.getAllTours = async (req, res) => {
 ### Making an API better: Advanced Filtering
 
 using advance filter such as greater than, less than.... to filter querying, so 
+
+```js
+const Tour = require('../models/tourModel');
+
+// 2) ROUTE HANDLER
+exports.getAllTours = async (req, res) => {
+  //return all the documents in this collection
+  try {
+    //console.log(req.query);
+    //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
+
+    //BUILD QUERY
+    // 1)Filtering
+    const queryObj = { ...req.query };
+    const excludeFileds = ['page', 'sort', 'limit', 'fields'];
+    excludeFileds.forEach((el) => delete queryObj[el]);
+    // console.log(req.query, queryObj, excludeFileds);
+
+    // 2) Advanced filtering
+
+    let queryStr = JSON.stringify(queryObj);
+    //using regex expressions
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    console.log(JSON.parse(queryStr));
+
+    const query = Tour.find(JSON.parse(queryStr));
+    //EXECUTE QUERY
+    const getAllTours = await query;
+
+    /*  //second way to writing query
+
+    const getAllTours = await Tour.find()
+      .where('duration')
+      .equal(5)
+      .where('difficulty')
+      .equal('easy'); */
+
+    res.status(200).json({
+      status: 'success',
+      //result measures the number of results that are in the tours
+      result: getAllTours.length,
+      //this data property here to envelope the tours.
+      data: {
+        tours: getAllTours,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+```
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678728132/Screen_Shot_2023-03-13_at_12.20.31_PM_gdxuzp.png)
