@@ -617,23 +617,21 @@ userRouter.route("/:id").get(getUser).patch(updateUser).delete(deleteUser);
 >
 > ```js
 > const express = require("express");
->
-> const tourController = require("./../controllers/tourController");
->
+>const tourController = require("./../controllers/tourController");
 > const router = express.Router();
 >
 > router
->   .route("/")
->   .get(tourController.getAllTours)
+>.route("/")
+> .get(tourController.getAllTours)
 >   .post(tourController.createTour);
-> router
+>   router
 >   .route("/:id")
->   .get(tourController.getTour)
+> .get(tourController.getTour)
 >   .patch(tourController.createTour)
 >   .delete(tourController.deleteTour);
->
-> module.exports = router;
-> ```
+>   
+>   module.exports = router;
+>```
 
 > Routes/userRoutes.js
 >
@@ -1577,7 +1575,7 @@ exports.deleteTour = async (req, res) => {
 ### Making an API better: Filtering
 
 ```js
-127.0.0.1:3000/api/v1/tours?duration=5&difficulty=easy
+postman: 127.0.0.1:3000/api/v1/tours?duration=5&difficulty=easy
 ```
 
 ```js 
@@ -1614,7 +1612,8 @@ exports.getAllTours = async (req, res) => {
     const query = await Tour.find(queryObj);
 
     //EXECUTE QUERY
-    const tours = await query;
+    const getAllTours = await query;
+
     
     res.status(200).json({
       status: 'success',
@@ -1634,4 +1633,8 @@ exports.getAllTours = async (req, res) => {
 };
 ```
 
-- Tour.find(queryObj) will return a `query`, 
+- Tour.find(queryObj) will return a `query`
+
+### Making an API better: Advanced Filtering
+
+using advance filter such as greater than, less than.... to filter querying, so 
