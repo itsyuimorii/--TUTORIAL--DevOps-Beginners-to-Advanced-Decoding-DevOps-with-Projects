@@ -1596,3 +1596,42 @@ exports.deleteTour = async (req, res) => {
       .equal('easy');
 ```
 
+> Excluding`['page', 'sort', 'limit', 'fields'];`
+
+```js
+// 2) ROUTE HANDLER
+exports.getAllTours = async (req, res) => {
+  //return all the documents in this collection
+  try {
+    //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
+
+    //BUILD QUERY
+    const queryObj = { ...req.query };
+    const excludeFileds = ['page', 'sort', 'limit', 'fields'];
+    excludeFileds.forEach((el) => delete queryObj[el]);
+
+    // console.log(req.query, queryObj, excludeFileds);
+    const query = await Tour.find(queryObj);
+
+    //EXECUTE QUERY
+    const tours = await query;
+    
+    res.status(200).json({
+      status: 'success',
+      //result measures the number of results that are in the tours
+      result: getAllTours.length,
+      //this data property here to envelope the tours.
+      data: {
+        tours: getAllTours,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+```
+
+- Tour.find(queryObj) will return a `query`, 
