@@ -1590,6 +1590,7 @@ exports.deleteTour = async (req, res) => {
 >   try {
 >     await Tour.deleteMany();
 >     console.log('Data successfully deleted');
+>     process.exit();
 >   } catch (error) {
 >     console.log(error);
 >   }
@@ -1600,10 +1601,12 @@ exports.deleteTour = async (req, res) => {
 > } else if (process.argv[2] === '--delete') {
 >   deleteData();
 > }
+> 
 > ```
 >
 > ```bash
-> node dev-data/data/import-dev-data.js 
+> node dev-data/data/import-dev-data.js --import
+> node dev-data/data/import-dev-data.js --delete
 > ```
 >
 > 
