@@ -5,8 +5,20 @@ exports.getAllTours = async (req, res) => {
   //return all the documents in this collection
   try {
     //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
+    console.log(req.query);
 
-    const getAllTours = await Tour.find();
+    //first way to writing query
+    // const getAllTours = await Tour.find({
+    //   duration: 5,
+    //   difficulty: 'easy',
+    // });
+
+    const getAllTours = await Tour.find()
+      .where('duration')
+      .equal(5)
+      .where('difficulty')
+      .equal('easy');
+
     res.status(200).json({
       status: 'success',
       //result measures the number of results that are in the tours
