@@ -28,6 +28,17 @@ const tours = JSON.parse(fs.readFileSync('tours-simple.json', 'utf-8'));
 const importData = async () => {
   try {
     await Tour.create(tours);
+    console.log('Data successfully created');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//DELETE ALL DATA FROM COLLECTION
+const deleteData = async () => {
+  try {
+    await Tour.deleteMany();
+    console.log('Data successfully deleted');
   } catch (error) {
     console.log(error);
   }
