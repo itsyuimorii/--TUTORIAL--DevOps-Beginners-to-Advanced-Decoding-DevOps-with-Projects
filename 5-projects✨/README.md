@@ -1700,3 +1700,4 @@ exports.getAllTours = async (req, res) => {
 ### Making an API better: Sorting
 
 - Sorting by price
+
