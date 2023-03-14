@@ -1637,7 +1637,17 @@ exports.getAllTours = async (req, res) => {
 
 ### Making an API better: Advanced Filtering
 
-- Using advance filter such as greater than, less than.... to filter querying, so 
+Query operators
+
+```js
+db.tour.find({price: {$lte: 500}})  //$:mongo operator
+```
+
+
+
+- Using advance filter such as greater than, less than.... to filter querying, 
+
+  > tourController
 
 ```js
 const Tour = require('../models/tourModel');
