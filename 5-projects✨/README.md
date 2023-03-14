@@ -1701,3 +1701,12 @@ exports.getAllTours = async (req, res) => {
 
 - Sorting by price
 
+```js
+    // 2) Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      console.log(sortBy);
+      query = query.sort(sortBy);
+    }
+```
+
