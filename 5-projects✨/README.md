@@ -1697,7 +1697,7 @@ exports.getAllTours = async (req, res) => {
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678728132/Screen_Shot_2023-03-13_at_12.20.31_PM_gdxuzp.png)
 
-### Making an API better: Sorting
+### Making the API better: Sorting
 
 - Sorting by price
 
@@ -1705,8 +1705,16 @@ exports.getAllTours = async (req, res) => {
     // 2) Sorting
     if (req.query.sort) {
       const sortBy = req.query.sort.split(',').join(' ');
-      console.log(sortBy);
+      // console.log(sortBy);
       query = query.sort(sortBy);
+      //So in case that the user does not specify any sort field in the URL query string, we're still gonna add a sort to the query. So query.sort and we will then sort by the created add field, all right? And actually in a descending order, so that the newest ones appear first. So minus created at.
+    } else {
+      query = query.sort('-createdAt');
     }
 ```
 
+```js
+127.0.0.1:3000/api/v1/tours?sort=-price 
+```
+
+### Making the API better: Limiting fields
