@@ -1640,7 +1640,11 @@ exports.getAllTours = async (req, res) => {
 Query operators
 
 ```js
-db.tour.find({price: {$lte: 500}})  //$:mongo operator
+use itsyuimoriiTours
+//$:mongo operator
+db.tours.find({ price: {$lte: 500} })   
+
+db.tours.find({ $or: [ {price: {$lt: 500}}, {rating: {$gte: 4.8}}  ] })
 ```
 
 
