@@ -1732,3 +1732,8 @@ exports.getAllTours = async (req, res) => {
 ```
 
 ### Making the API better: Limiting fields
+
+
+to choose which fields they wantto get back in the response .So, for a client, **it's always ideal to receive as little data as possible,in order to reduce the band width that is consumed with each request.** And that's, of course, especially true when we have really data-heavy data sets, right? And so it's a very nice feature to allow the API user to only request some of the fields.
+
+So, as the third feature, we will have field limiting.And, just like before, let me start by showing you  how it's gonna work here in Postman.So, we're gonna specify a field called fields,and then the name of the fields that we actually want to receive.So let's say we only want **the name,the duration,the difficulty, and the price,** And so, the implementation will actually be very similar to what we did before with sorting.
