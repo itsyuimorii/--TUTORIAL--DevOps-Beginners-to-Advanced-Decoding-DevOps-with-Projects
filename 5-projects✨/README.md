@@ -1742,7 +1742,7 @@ So, as the third feature, we will have field limiting.And, just like before, let
   // 3) Field Limiting
     if (req.query.fields) {
       //get field from postman
-      const fields = req.query.fields.split('.').join(' ');
+      const fields = req.query.fields.split(',s').join(' ');
       query = query.select(fields);
     } else {
       //excluding this field
@@ -1752,5 +1752,7 @@ So, as the third feature, we will have field limiting.And, just like before, let
 ```
 
 > Postman `127.0.0.1:3000/api/v1/tours?fields=name,duration,difficulty,price`
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678939417/Screen_Shot_2023-03-15_at_11.02.59_PM_svkxal.png)
 
 ### Making the API better: Pagination
