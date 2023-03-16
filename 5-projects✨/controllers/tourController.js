@@ -40,12 +40,12 @@ exports.getAllTours = async (req, res) => {
       query = query.select(fields);
     } else {
       //excluding this field
-      //query = query.select('-__v');
+      query = query.select('-__v');
     }
 
     // 4) Pagination
     // page=2&limit=10 1-10 page1 11-20 page2
-    query = query.skip(20).limit(10);
+    // query = query.skip(20).limit(10);
 
     //EXECUTE QUERY
     const getAllTours = await query;
