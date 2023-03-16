@@ -1,8 +1,35 @@
 const Tour = require('../models/tourModel');
 //alias middleware
+
 exports.aliasTopTours = (req, res, next) => {
+  req.query.limit = '5';
+  req.query.sort = '-ratingAverage,price';
+  req.query.fields = 'name,price,ratingAverage,summary,difficulty';
   next();
 };
+
+class APIFeatures {
+  // two variables => the mongoose query and also the queryString
+  //Now, again, I'm passing the query here because I do not want to query inside of this class because that would then bounce this class to the tour resource but, again,I want this to be as reusable as possible.
+  constructor(query, queryString) {
+    this.query = query;
+    this.queryString = queryString;
+  }
+
+  //each of the functionality, starting with filter.
+  filter() {
+    const queryObj = { ...this.queryString };
+    const excludeFields = ['page', 'sort', 'limit', 'fields'];
+    excludeFields.forEach((el) => delete queryObj[el]);
+
+    // 1B) Advanced filtering
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    this.query.find(JSON.parse(queryStr));
+    // let query = Tour.find(JSON.parse(queryStr));
+  }
+}
 
 // 2) ROUTE HANDLER
 exports.getAllTours = async (req, res) => {
@@ -10,23 +37,6 @@ exports.getAllTours = async (req, res) => {
   try {
     //console.log(req.query);
     //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
-
-    //BUILD QUERY
-    // 1A) Filtering
-    const queryObj = { ...req.query };
-    const excludeFields = ['page', 'sort', 'limit', 'fields'];
-    excludeFields.forEach((el) => delete queryObj[el]);
-    // console.log(req.query, queryObj, excludeFields);
-    // const query = Tour.find(queryObj);
-
-    // 1B) Advanced filtering
-
-    let queryStr = JSON.stringify(queryObj);
-    //using regex expressions
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    // console.log(JSON.parse(queryStr));
-
-    let query = Tour.find(JSON.parse(queryStr));
 
     // 2) Sorting
     if (req.query.sort) {
@@ -62,7 +72,11 @@ exports.getAllTours = async (req, res) => {
       if (skip > numTours) throw new Error('this page does not exist');
     }
     //EXECUTE QUERY
-    const getAllTours = await query;
+    //create instance of APIfeatures, that will then get stored into Features.
+    // we need to pass a query(create a query object Tour.find() and the queryString.
+    //so this features will get API filtering functionality.
+    const features = new APIFeatures(Tour.find(), req.query).filter();
+    const tours = await features.query;
 
     /*  //second way to writing query
 
@@ -75,10 +89,10 @@ exports.getAllTours = async (req, res) => {
     res.status(200).json({
       status: 'success',
       //result measures the number of results that are in the tours
-      result: getAllTours.length,
+      result: tours.length,
       //this data property here to envelope the tours.
       data: {
-        tours: getAllTours,
+        tours: tours,
       },
     });
   } catch (err) {
