@@ -9,7 +9,7 @@ exports.aliasTopTours = (req, res, next) => {
 };
 
 class APIFeatures {
-  // two variables => the mongoose query and also the queryString
+  // two variables => the mongoose query and also the queryString from express
   //Now, again, I'm passing the query here because I do not want to query inside of this class because that would then bounce this class to the tour resource but, again,I want this to be as reusable as possible.
   constructor(query, queryString) {
     this.query = query;
@@ -19,10 +19,11 @@ class APIFeatures {
   //each of the functionality, starting with filter.
   filter() {
     const queryObj = { ...this.queryString };
+
     const excludeFields = ['page', 'sort', 'limit', 'fields'];
     excludeFields.forEach((el) => delete queryObj[el]);
 
-    // 1B) Advanced filtering
+    // 1B) Advanced filtering (gte,lte...etc )
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
@@ -33,7 +34,7 @@ class APIFeatures {
     // 2) Sorting
     if (this.queryString.sort) {
       const sortBy = queryString.sort.split(',').join(' ');
-      // console.log(sortBy);
+     //get field from postman
       this.query = this.query.sort(sortBy);
     } else {
       this.query = this.query.sort('-createdAt');
@@ -44,8 +45,8 @@ class APIFeatures {
     // if (req.query.fields) {
       if (this.queryString.fields) {
       //get field from postman
-      const fields = req.query.fields.split(',').join(' ');
-      query = query.select(fields);
+      const fields = queryString.fields.split(',').join(' ');
+      this.query = this.query.select(fields);
     } else {
       //excluding this field
       query = query.select('-__v');
@@ -58,8 +59,6 @@ class APIFeatures {
 exports.getAllTours = async (req, res) => {
   //return all the documents in this collection
   try {
- 
- 
     // 3) Field Limiting
     if (req.query.fields) {
       //get field from postman
