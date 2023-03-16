@@ -39,17 +39,19 @@ class APIFeatures {
       query = this.query.sort('-createdAt');
     }
   }
-
-   // 3) Field Limiting
-   if (req.query.fields) {
-    //get field from postman
-    const fields = req.query.fields.split(',').join(' ');
-    query = query.select(fields);
-  } else {
-    //excluding this field
-    query = query.select('-__v');
+  fields(){ 
+    // 3) Field Limiting
+    if (req.query.fields) {
+      //get field from postman
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else {
+      //excluding this field
+      query = query.select('-__v');
+    }
   }
-}
+}|
+
 
 // 2) ROUTE HANDLER
 exports.getAllTours = async (req, res) => {
