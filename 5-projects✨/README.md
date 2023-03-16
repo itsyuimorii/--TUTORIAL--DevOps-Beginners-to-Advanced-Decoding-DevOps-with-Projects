@@ -1793,4 +1793,7 @@ router.route('/top-5-cheap').get(tourController.getAllTours);
 127.0.0.1:3000/api/v1/tours?limit=5&sort=-ratingAverage,price
 ```
 
-we basically want to **prefill some of the fields** in the query string.So, we already knowthat our query string should look like this.And, actually we can add some more stuff here.But, in essence, our query string has to look something like this.And so, the solution is gonna be to **run a middleware** before we actually run this ` handler`.And so, that middleware function is then gonna manipulate the query object that's coming in.And so, this is yet another really nice example of using middleware because you really needto get familiar and used to this conceptof using middleware strategically in orderto change the request object as we need it.
+we basically want to **prefill some of the fields** in the query string.So, we already knowthat our query string should look like this.And, actually we can add some more stuff here.But, in essence, our query string has to look something like this.And so, the solution is gonna be to **run a middleware** before we actually run this ` handler`.And so, that middleware function is then gonna **manipulate the query object** that's coming in.And so, this is yet another really nice example of using middleware because you really needto get familiar and used to this conceptof **using middleware strategically in orderto change the request object** as we need it.
+
+In order to make our query string like this `router.route('/top-5-cheap').get(tourController.getAllTours);`, we need too write a middleware function called `aliasTopTours`
+
