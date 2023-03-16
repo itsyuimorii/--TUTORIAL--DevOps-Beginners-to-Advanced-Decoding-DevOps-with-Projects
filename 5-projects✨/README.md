@@ -1779,3 +1779,19 @@ And now what kind of methods do we have in order to implement pagination? The mo
 ```
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678939732/Screen_Shot_2023-03-15_at_11.08.27_PM_zoxujg.png)
+
+### Making the API Better: Aliasing
+
+that we can add to an API is to provide an alias route to a request that might be very popular, so it might be requested all the time.
+
+```js
+router.route('/top-5-cheap').get(tourCountroller.getAllTours);
+```
+
+```js
+//get five cheapest routes in postman
+127.0.0.1:3000/api/v1/tours?limit=5&sort=-ratingAverage,price
+```
+
+
+

@@ -4,7 +4,11 @@ const tourController = require('../controllers/tourController');
 
 const router = express.Router();
 
-/* use this .param function here to define parameter middleware in your own applications  */
+router
+  .route('/top-5-cheap')
+  .get(
+    tourController.getAllTours
+  ); /* use this .param function here to define parameter middleware in your own applications  */
 // router.param('id', tourController.checkID);
 
 router
