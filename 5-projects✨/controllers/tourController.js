@@ -34,14 +34,15 @@ class APIFeatures {
     if (this.queryString.sort) {
       const sortBy = queryString.sort.split(',').join(' ');
       // console.log(sortBy);
-      query = this.query.sort(sortBy);
+      this.query = this.query.sort(sortBy);
     } else {
-      query = this.query.sort('-createdAt');
+      this.query = this.query.sort('-createdAt');
     }
   }
   fields(){ 
     // 3) Field Limiting
-    if (req.query.fields) {
+    // if (req.query.fields) {
+      if (this.queryString.fields) {
       //get field from postman
       const fields = req.query.fields.split(',').join(' ');
       query = query.select(fields);
@@ -57,18 +58,8 @@ class APIFeatures {
 exports.getAllTours = async (req, res) => {
   //return all the documents in this collection
   try {
-    //console.log(req.query);
-    //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
-
-    // 2) Sorting
-    if (req.query.sort) {
-      const sortBy = req.query.sort.split(',').join(' ');
-      // console.log(sortBy);
-      query = query.sort(sortBy);
-    } else {
-      query = query.sort('-createdAt');
-    }
-
+ 
+ 
     // 3) Field Limiting
     if (req.query.fields) {
       //get field from postman
