@@ -44,10 +44,13 @@ exports.getAllTours = async (req, res) => {
     }
 
     // 4) Pagination
+    //convert string into number by "*1"
     const page = req.query.page * 1 || 1;
-
-    // page=2&limit=10 1-10 page1 11-20 page2
-    query = query.skip(2).limit(10);
+    const limit = req.query.limit * 1 || 100;
+    //define the skip value
+    const skip = (page - 1) * limit;
+    // page=3&limit=10 page1(1-10)  page2(11-20)  page3(21-30 )
+    query = query.skip(skip).limit(limit);
 
     //EXECUTE QUERY
     const getAllTours = await query;
