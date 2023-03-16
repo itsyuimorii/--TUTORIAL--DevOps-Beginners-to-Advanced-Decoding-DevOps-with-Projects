@@ -1,4 +1,8 @@
 const Tour = require('../models/tourModel');
+//alias middleware
+exports.aliasTopTours = (req, res, next) => {
+  next();
+};
 
 // 2) ROUTE HANDLER
 exports.getAllTours = async (req, res) => {
