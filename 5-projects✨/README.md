@@ -1756,3 +1756,13 @@ So, as the third feature, we will have field limiting.And, just like before, let
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678939417/Screen_Shot_2023-03-15_at_11.02.59_PM_svkxal.png)
 
 ### Making the API better: Pagination
+
+And now what kind of methods do we have in order to implement pagination? The most useful one is **skip**and so this limit here is actually exactly the same as the limit that we defined in the query string. So basically the amount of results that we want in the query. And then **skip**, that we have here, *is the amount of results that should be skipped before actually querying data. bAll right, so again, this is just a placeholder here.*
+
+```js
+  // 4) Pagination
+    // page=2&limit=10 1-10 page1 11-20 page2
+    query = query.skip(2).limit(10);
+```
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678939732/Screen_Shot_2023-03-15_at_11.08.27_PM_zoxujg.png)
