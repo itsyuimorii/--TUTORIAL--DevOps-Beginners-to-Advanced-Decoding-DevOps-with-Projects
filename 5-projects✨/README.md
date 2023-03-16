@@ -2067,21 +2067,7 @@ class APIFeatures {
     const features = new APIFeatures(Tour.find(), req.query).filter();
     const tours = await features.query;
 
-    res.status(200).json({
-      status: 'success',
-      //result measures the number of results that are in the tours
-      result: tours.length,
-      //this data property here to envelope the tours.
-      data: {
-        tours: tours,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
+  ....
 };
  
 ```
