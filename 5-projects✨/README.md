@@ -1624,12 +1624,21 @@ exports.getAllTours = async (req, res) => {
     //query for all the documents,using find() method, it will return an array of all these documents,and will also very nicely convert them into JavaScript objects
 
     //BUILD QUERY
+    /*
+    Here we need, really, a hard copy.We can't just do, request dot query,because then, if you would delete somethingfrom this object, we would also delete itfrom the req dot query object.And that's because in JavaScript,when we set a variable to another object,that new variable will basically just bea reference to that original object.So we really need a hard copy here.In JavaScript, there's not really a built-in wayof doing this, but a very nice trick that we can use,since ES6, is to use, first, the structuringwhich we use by using dot dot dot.And then we can simply create anew object out of that.Just like this.This structuring here, these three dots,will basically take all the fields out of the object.Here with the curly braces, well,we simply create a new object.So we have a new object that is basicallygoing to contain all the key value pairsthat were in our req dot query object.So that's a copy.*/    
     const queryObj = { ...req.query };
-    //excluding fileds before we setup those method.
+    
+    
+    // Now let's create an array ofall the fields that we want to exclude.I'm calling that one excluded fields.And then we want to exclude page,so that's the one that I justtold you before in Postman.Then, we also want to excludesort,we want to exclude limit,and we want to exclude fields.We will implement all of the functionalityof paging, sorting, limiting, and selectingonly some specific fields, laterover the next couple of videos. 
     const excludeFileds = ['page', 'sort', 'limit', 'fields'];
+    
+    //Next, what we need to do is tobasically remove all of these fields from our query object.
     excludeFileds.forEach((el) => delete queryObj[el]);
-
-    // console.log(req.query, queryObj, excludeFileds);
+    
+		//testing the method words, req.query should be all items, and queryObj is after excluding
+    console.log(req.query, queryObj, excludeFileds);
+    
+    //get query without excluding fields
     const query = await Tour.find(queryObj);
 
     //EXECUTE QUERY
