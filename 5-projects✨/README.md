@@ -1574,7 +1574,7 @@ exports.deleteTour = async (req, res) => {
 
 ### Making an API better: Filtering
 
-get the log from console 
+💥get the log from console 
 
 > server.js
 
@@ -1597,8 +1597,10 @@ exports.getAllTours = async (req, res) => {
 
 then we could get the  `duration=5&difficulty=easy` in console
 
+💥In mongo ,two ways to write query  
+
 ```js 
-    //first way to writing query
+    //first way to writing query( currently using)
     const getAllTours = await Tour.find({
       duration: 5,
       difficulty: 'easy',
@@ -1612,7 +1614,7 @@ then we could get the  `duration=5&difficulty=easy` in console
       .equal('easy');
 ```
 
-> Excluding`['page', 'sort', 'limit', 'fields'];`
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678995080/Screen_Shot_2023-03-16_at_2.30.39_PM_dmytpe.png)
 
 ```js
 // 2) ROUTE HANDLER
@@ -1623,6 +1625,7 @@ exports.getAllTours = async (req, res) => {
 
     //BUILD QUERY
     const queryObj = { ...req.query };
+    //excluding fileds before we setup those method.
     const excludeFileds = ['page', 'sort', 'limit', 'fields'];
     excludeFileds.forEach((el) => delete queryObj[el]);
 
