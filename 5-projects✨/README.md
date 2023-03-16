@@ -1574,9 +1574,28 @@ exports.deleteTour = async (req, res) => {
 
 ### Making an API better: Filtering
 
+get the log from console 
+
+> server.js
+
+```js
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
+```
+
 ```js
 postman: 127.0.0.1:3000/api/v1/tours?duration=5&difficulty=easy
 ```
+
+```js
+exports.getAllTours = async (req, res) => {
+  //return all the documents in this collection
+  try {
+    console.log(req.query);
+    ...
+```
+
+then we could get the  `duration=5&difficulty=easy` in console
 
 ```js 
     //first way to writing query
