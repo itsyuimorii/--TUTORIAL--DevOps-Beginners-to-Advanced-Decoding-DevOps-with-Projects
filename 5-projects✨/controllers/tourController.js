@@ -35,11 +35,12 @@ exports.getAllTours = async (req, res) => {
 
     // 3) Field Limiting
     if (req.query.fields) {
-      const fields = req.query.field.split('.').join(' ');
+      //get field from postman
+      const fields = req.query.fields.split(',').join(' ');
       query = query.select(fields);
     } else {
       //excluding this field
-      query = query.select('-__v');
+      //query = query.select('-__v');
     }
 
     // 4) Pagination

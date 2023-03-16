@@ -1739,13 +1739,18 @@ to choose which fields they wantto get back in the response .So, for a client, *
 So, as the third feature, we will have field limiting.And, just like before, let me start by showing you  how it's gonna work here in Postman.So, we're gonna specify a field called fields,and then the name of the fields that we actually want to receive.So let's say we only want **the name,the duration,the difficulty, and the price,** And so, the implementation will actually be very similar to what we did before with sorting.
 
 ```js
-    // 3) Field Limiting
+  // 3) Field Limiting
     if (req.query.fields) {
-      const fields = req.query.fired.split('.').join(' ');
+      //get field from postman
+      const fields = req.query.fields.split('.').join(' ');
       query = query.select(fields);
     } else {
       //excluding this field
-      query = query.select('-__v');
+      // query = query.select('-__v');
     }
+
 ```
 
+> Postman `127.0.0.1:3000/api/v1/tours?fields=name,duration,difficulty,price`
+
+### Making the API better: Pagination
