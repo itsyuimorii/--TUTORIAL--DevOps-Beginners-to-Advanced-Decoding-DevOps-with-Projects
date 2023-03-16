@@ -1586,7 +1586,6 @@ postman: 127.0.0.1:3000/api/v1/tours?duration=5&difficulty=easy
     });
 
     //second way to writing query
-
     const getAllTours = await Tour.find()
       .where('duration')
       .equal(5)

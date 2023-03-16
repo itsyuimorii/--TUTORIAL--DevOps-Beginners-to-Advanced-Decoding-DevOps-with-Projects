@@ -29,6 +29,26 @@ class APIFeatures {
     this.query.find(JSON.parse(queryStr));
     // let query = Tour.find(JSON.parse(queryStr));
   }
+  sort(){
+    // 2) Sorting
+    if (this.queryString.sort) {
+      const sortBy = queryString.sort.split(',').join(' ');
+      // console.log(sortBy);
+      query = this.query.sort(sortBy);
+    } else {
+      query = this.query.sort('-createdAt');
+    }
+  }
+
+   // 3) Field Limiting
+   if (req.query.fields) {
+    //get field from postman
+    const fields = req.query.fields.split(',').join(' ');
+    query = query.select(fields);
+  } else {
+    //excluding this field
+    query = query.select('-__v');
+  }
 }
 
 // 2) ROUTE HANDLER
