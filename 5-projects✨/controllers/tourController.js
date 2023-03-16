@@ -52,8 +52,10 @@ exports.getAllTours = async (req, res) => {
     // page=3&limit=10 page1(1-10)  page2(11-20)  page3(21-30 )
     query = query.skip(skip).limit(limit);
 
+    //for the situations that page=4&limit=3, not enough 4 pages that show 3 results, using 👇
     if (req.query.page) {
       const numTours = await Tour.countDocuments();
+      if (skip > numTours) throw new Error('this page does not exist');
     }
     //EXECUTE QUERY
     const getAllTours = await query;
