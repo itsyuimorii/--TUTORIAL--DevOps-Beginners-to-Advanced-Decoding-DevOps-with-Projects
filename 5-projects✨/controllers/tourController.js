@@ -29,6 +29,7 @@ class APIFeatures {
 
     this.query.find(JSON.parse(queryStr));
     // let query = Tour.find(JSON.parse(queryStr));
+
   }
   sort(){
     // 2) Sorting
@@ -59,15 +60,16 @@ class APIFeatures {
 exports.getAllTours = async (req, res) => {
   //return all the documents in this collection
   try {
-    // 3) Field Limiting
-    if (req.query.fields) {
-      //get field from postman
-      const fields = req.query.fields.split(',').join(' ');
-      query = query.select(fields);
-    } else {
-      //excluding this field
-      query = query.select('-__v');
-    }
+    console.log(req.query);
+  /*   filter() {
+      const queryObj = { ...req.query };
+      const excludeFields = ['page', 'sort', 'limit', 'fields'];
+      excludeFields.forEach((el) => delete queryObj[el]);
+      // 1B) Advanced filtering (gte,lte...etc )
+      let queryStr = JSON.stringify(queryObj);
+      queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+      let query= Tour.find(JSON.parse(queryStr)); */
+ 
 
     // 4) Pagination
     //convert string into number by "*1"
