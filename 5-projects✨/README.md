@@ -2255,14 +2255,14 @@ exports.getTourStats = async (req, res) => {
   try {
     const stats = await Tour.aggregate([
       {
-        $match: { ratingsAverage: { $gte: 4.5 } },
+        $match: { ratingAverage: { $gte: 4.5 } },
       },
       {
         $group: {
           _id: { $toUpper: '$difficulty' },
           numTours: { $sum: 1 },
-          numRatings: { $sum: '$ratingsQuantity' },
-          avgRating: { $avg: '$ratingsAverage' },
+          numRatings: { $sum: '$ratingQuantity' },
+          avgRating: { $avg: '$ratingAverage' },
           avgPrice: { $avg: '$price' },
           minPrice: { $min: '$price' },
           maxPrice: { $max: '$price' },
@@ -2296,6 +2296,8 @@ exports.getTourStats = async (req, res) => {
 ```js
 router.route('/tour-stats').get(tourController.getTourStats);
 ```
+
+![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679244203/node.js%20notes/Screen_Shot_2023-03-19_at_11.43.19_AM_d1x6rq.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679244203/node.js notes/Screen_Shot_2023-03-19_at_11.43.19_AM_d1x6rq.png))
 
 ```js
 exports.getMonthlyPlan = async (req, res) => {
@@ -2358,3 +2360,6 @@ exports.getMonthlyPlan = async (req, res) => {
 router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 ```
 
+![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679243151/node.js%20notes/Screen_Shot_2023-03-19_at_11.25.45_AM_ocwmcm.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679243151/node.js notes/Screen_Shot_2023-03-19_at_11.25.45_AM_ocwmcm.png)
+
+## Aggregation Pipeline: Unwinding and Projecting
