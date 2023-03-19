@@ -11,6 +11,8 @@ router
 /* use this .param function here to define parameter middleware in your own applications  */
 // router.param('id', tourController.checkID);
 
+router.route('/tour-stats').get(tourController.getTourStats);
+
 router
   .route('/')
   .get(tourController.getAllTours)
