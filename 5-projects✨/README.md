@@ -2209,4 +2209,6 @@ module.exports = APIFeatures;
 
 ## 💛Aggregation Pipeline: Matching and Grouping
 
-MongoDB aggregation pipeline which is an extremely powerful and extremely useful MongoDB framework for data aggregation. And the idea is that we basically define a pipeline that all documents from a certain collection go through where they are processed step by step in order to transform them into aggregated results. For example, we can use the aggregation pipeline in order to calculate averages or calculating minimum and maximum values or we can calculate distances even, and we can really do all kinds of stuff. It's really amazing how powerful this aggregation pipeline is.
+MongoDB aggregation pipeline which is an extremely powerful and extremely useful MongoDB framework for data aggregation. And the idea is that **we basically define a pipeline that all documents from a certain collection go through where they are processed step by step in order to transform them into aggregated results.** 
+
+For example, we can use the aggregation pipeline in order to calculate averages or calculating minimum and maximum values or we can calculate distances even, and we can really do all kinds of stuff. It's really amazing how powerful this aggregation pipeline is.
