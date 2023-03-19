@@ -94,7 +94,7 @@ exports.getAllTours = async (req, res) => {
 
     const getAllTours = await Tour.find()
       .where('duration')
-      .equal(5)
+      .equal(5)2
       .where('difficulty')
       .equal('easy'); */
 
