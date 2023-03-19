@@ -17,51 +17,66 @@ class APIFeatures {
   }
 
   //each of the functionality, starting with filter.
+
   filter() {
     const queryObj = { ...this.queryString };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
 
-    const excludeFields = ['page', 'sort', 'limit', 'fields'];
-    excludeFields.forEach((el) => delete queryObj[el]);
-
-    // 1B) Advanced filtering (gte,lte...etc )
+    // 1B) Advanced filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-    this.query.find(JSON.parse(queryStr));
-    // let query = Tour.find(JSON.parse(queryStr));
+    this.query = this.query.find(JSON.parse(queryStr));
 
+    return this;
   }
-  sort(){
-    // 2) Sorting
+
+  // 2) Sorting
+  sort() {
     if (this.queryString.sort) {
-      const sortBy = queryString.sort.split(',').join(' ');
-     //get field from postman
+      const sortBy = this.queryString.sort.split(',').join(' ');
       this.query = this.query.sort(sortBy);
     } else {
       this.query = this.query.sort('-createdAt');
     }
+
+    return this;
   }
-  fields(){ 
+
+  limitFields() {
     // 3) Field Limiting
-    // if (req.query.fields) {
-      if (this.queryString.fields) {
+    if (this.queryString.fields) {
       //get field from postman
-      const fields = queryString.fields.split(',').join(' ');
+      const fields = this.queryString.fields.split(',').join(' ');
       this.query = this.query.select(fields);
     } else {
       //excluding this field
-      query = query.select('-__v');
+      this.query = this.query.select('-__v');
+      return this;
     }
   }
-}|
 
+  pagination() {
+    // 4) Pagination
+    //convert string into number by "*1"
+    const page = this.queryString.page * 1 || 1;
+    const limit = this.queryString.limit * 1 || 100;
+    //define the skip value
+    const skip = (page - 1) * limit;
+    // page=3&limit=10 page1(1-10)  page2(11-20)  page3(21-30 )
+    this.query = this.query.skip(skip).limit(limit);
+
+    return this;
+  }
+}
 
 // 2) ROUTE HANDLER
 exports.getAllTours = async (req, res) => {
   //return all the documents in this collection
   try {
     console.log(req.query);
-  /*   filter() {
+    /*  //filter() {
       const queryObj = { ...req.query };
       const excludeFields = ['page', 'sort', 'limit', 'fields'];
       excludeFields.forEach((el) => delete queryObj[el]);
@@ -69,9 +84,27 @@ exports.getAllTours = async (req, res) => {
       let queryStr = JSON.stringify(queryObj);
       queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
       let query= Tour.find(JSON.parse(queryStr)); */
- 
 
-    // 4) Pagination
+    /* // 2) Sorting
+      if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ');
+        //get field from postman
+        query = query.sort(sortBy);
+      } else {
+        query = query.sort('-createdAt');
+      } */
+
+    /* // 3) Field Limiting
+      if (req.query.fields) {
+         //get field from postman
+        const fields = req.query.fields.split(',').join(' ');
+        query =query.select(fields);
+      } else {
+        //excluding this field
+        query = query.select('-__v');
+      }
+    */
+    /* // 4) Pagination
     //convert string into number by "*1"
     const page = req.query.page * 1 || 1;
     const limit = req.query.limit * 1 || 100;
@@ -84,14 +117,18 @@ exports.getAllTours = async (req, res) => {
     if (req.query.page) {
       const numTours = await Tour.countDocuments();
       if (skip > numTours) throw new Error('this page does not exist');
-    }
+    } */
     //EXECUTE QUERY
     //create instance of APIfeatures, that will then get stored into Features.
     // we need to pass a query(create a query object Tour.find() and the queryString.
     //so this features will get API filtering functionality.
-    const features = new APIFeatures(Tour.find(), req.query).filter();
+    // EXECUTE QUERY
+    const features = new APIFeatures(Tour.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
     const tours = await features.query;
-
     /*  //second way to writing query
 
     const getAllTours = await Tour.find()
