@@ -2273,3 +2273,9 @@ The difference here is that in aggregations, **we can manipulate the data in a c
     ]);
 ```
 
+> Routes/tourRoutes.js
+
+```js
+router.route('/tour-stats').get(tourController.getTourStats);
+```
+
