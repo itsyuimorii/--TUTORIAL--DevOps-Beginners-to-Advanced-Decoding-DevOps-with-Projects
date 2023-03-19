@@ -1,15 +1,18 @@
+/* use this .param function here to define parameter middleware in your own applications  */
+// router.param('id', tourController.checkID);
 const express = require('express');
 const tourController = require('../controllers/tourController');
 
 const router = express.Router();
 
-/* use this .param function here to define parameter middleware in your own applications  */
 // router.param('id', tourController.checkID);
+
 router
   .route('/top-5-cheap')
   .get(tourController.aliasTopTours, tourController.getAllTours);
 
 router.route('/tour-stats').get(tourController.getTourStats);
+router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 router
   .route('/')
