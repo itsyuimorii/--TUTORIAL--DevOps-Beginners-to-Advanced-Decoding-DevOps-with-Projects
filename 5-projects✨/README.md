@@ -2248,8 +2248,12 @@ And so the aggregation pipeline is a bitlike a regular query and so using the ag
 
 The difference here is that in aggregations, **we can manipulate the data in a couple of different steps and so let's now actually define these steps.**And for that, we pass in an array of so-called **stages**. So we pass in an array, and then here we will then have a lot of stages.And again the documents then pass through these stagesone by one, step by step in the define sequenceas we define it here. So each of the elements in this array will be one of the stages.
 
+> /controllers/tourControllers
+
 ```js
-   const stats = await Tour.aggregate([
+exports.getTourStats = async (req, res) => {
+  try {
+    const stats = await Tour.aggregate([
       {
         $match: { ratingsAverage: { $gte: 4.5 } },
       },
@@ -2271,11 +2275,86 @@ The difference here is that in aggregations, **we can manipulate the data in a c
       //   $match: { _id: { $ne: 'EASY' } }
       // }
     ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        stats,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
 ```
 
 > Routes/tourRoutes.js
 
 ```js
 router.route('/tour-stats').get(tourController.getTourStats);
+```
+
+```js
+exports.getMonthlyPlan = async (req, res) => {
+  try {
+    const year = req.params.year * 1; // 2021
+
+    const plan = await Tour.aggregate([
+      {
+        $unwind: '$startDates',
+      },
+      {
+        $match: {
+          startDates: {
+            $gte: new Date(`${year}-01-01`),
+            $lte: new Date(`${year}-12-31`),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { $month: '$startDates' },
+          numTourStarts: { $sum: 1 },
+          tours: { $push: '$name' },
+        },
+      },
+      {
+        $addFields: { month: '$_id' },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+      {
+        $sort: { numTourStarts: -1 },
+      },
+      {
+        $limit: 12,
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        plan,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+```
+
+> Routes/tourRoutes.js
+
+```js
+router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 ```
 

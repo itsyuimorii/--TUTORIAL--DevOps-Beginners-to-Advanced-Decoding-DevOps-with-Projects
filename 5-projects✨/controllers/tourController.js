@@ -117,6 +117,15 @@ exports.getTourStats = async (req, res) => {
       {
         $match: { ratingsAverage: { $gte: 4.5 } },
       },
+      {
+        $group: {
+          _id: { $toUpper: '$difficulty' },
+        },
+      },
+
+      // {
+      //   $match: { _id: { $ne: 'EASY' } }
+      // }
     ]);
 
     res.status(200).json({
