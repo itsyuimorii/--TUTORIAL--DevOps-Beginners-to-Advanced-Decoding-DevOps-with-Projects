@@ -115,7 +115,6 @@ exports.deleteTour = async (req, res) => {
 };
 
 //💛Aggregation Pipeline: Matching and Grouping
-
 exports.getTourStats = async (req, res) => {
   try {
     const stats = await Tour.aggregate([
@@ -123,6 +122,7 @@ exports.getTourStats = async (req, res) => {
         $match: { ratingsAverage: { $gte: 4.5 } },
       },
       {
+        //accumulator
         $group: {
           _id: { $toUpper: '$difficulty' },
           numTours: { $sum: 1 },
