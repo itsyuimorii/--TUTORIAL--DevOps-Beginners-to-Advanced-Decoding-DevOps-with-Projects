@@ -126,14 +126,17 @@ exports.getTourStats = async (req, res) => {
         $group: {
           _id: null,
           avgRating: { $avg: '$ratingsAverage' },
+          avgPrice: {
+            $avg: '$price',
+          },
+          minPirce: {
+            $min: '$price',
+          },
+          maxPrice: {
+            $max: '$price',
+          },
         },
       },
-      {
-        $sort: { avgPrice: 1 },
-      },
-      // {
-      //   $match: { _id: { $ne: 'EASY' } }
-      // }
     ]);
 
     res.status(200).json({
