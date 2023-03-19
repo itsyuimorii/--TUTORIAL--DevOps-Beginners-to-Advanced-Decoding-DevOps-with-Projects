@@ -1289,7 +1289,7 @@ testTour
 > //error💥: _message: 'Tour validation failed'
 > ```
 
-## Backend architecture - MVC
+## 💛 Backend architecture - MVC
 
 ![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1678596837/Screen_Shot_2023-03-11_at_10.53.38_PM_frtc08.png)
 
@@ -1506,7 +1506,7 @@ exports.deleteTour = async (req, res) => {
 
 ### Reference https://www.natours.dev/api/v1/tours
 
-## Importing Development Data
+## 💛 Importing Development Data
 
 > create a script import JSON into dababase `dev-data/data/import-dev-data.js`
 >
@@ -2023,52 +2023,190 @@ exports.deleteTour = async (req, res) => {
 };
 ```
 
-## Refactoring API features
+## 💛Refactoring API features
+
+> controllers/tourController.js
 
 ```js
 const Tour = require('../models/tourModel');
-//alias middleware
 
+const APIFeatures = require('../utils/apiFeatures');
+
+//alias middleware
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
-  req.query.sort = '-ratingAverage,price';
-  req.query.fields = 'name,price,ratingAverage,summary,difficulty';
+  req.query.sort = '-ratingsAverage,price';
+  req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
   next();
 };
 
+// 2) ROUTE HANDLER
+exports.getAllTours = async (req, res) => {
+  try {
+    // EXECUTE QUERY
+    const features = new APIFeatures(Tour.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const tours = await features.query;
+
+    // SEND RESPONSE
+    res.status(200).json({
+      status: 'success',
+      results: tours.length,
+      data: {
+        tours,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+exports.getTour = async (req, res) => {
+  try {
+    const tour = await Tour.findById(req.params.id);
+    // Tour.findOne({ _id: req.params.id })
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+exports.createTour = async (req, res) => {
+  try {
+    // const newTour = new Tour({})
+    // newTour.save()
+
+    const newTour = await Tour.create(req.body);
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        tour: newTour,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+exports.updateTour = async (req, res) => {
+  try {
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+//no info send back to the client
+exports.deleteTour = async (req, res) => {
+  try {
+    await Tour.findByIdAndDelete(req.params.id);
+
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+```
+
+> utils/apiFeatures.js
+
+```js
 class APIFeatures {
-  // two variables => the mongoose query and also the queryString
+  // two variables => the mongoose query and also the queryString from express
   //Now, again, I'm passing the query here because I do not want to query inside of this class because that would then bounce this class to the tour resource but, again,I want this to be as reusable as possible.
   constructor(query, queryString) {
     this.query = query;
     this.queryString = queryString;
   }
 
-  //each of the functionality, starting with filter.
   filter() {
     const queryObj = { ...this.queryString };
-    const excludeFields = ['page', 'sort', 'limit', 'fields'];
-    excludeFields.forEach((el) => delete queryObj[el]);
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
 
     // 1B) Advanced filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-    this.query.find(JSON.parse(queryStr));
-    // let query = Tour.find(JSON.parse(queryStr));
+    this.query = this.query.find(JSON.parse(queryStr));
+
+    return this;
+  }
+
+  sort() {
+    if (this.queryString.sort) {
+      const sortBy = this.queryString.sort.split(',').join(' ');
+      this.query = this.query.sort(sortBy);
+    } else {
+      this.query = this.query.sort('-createdAt');
+    }
+
+    return this;
+  }
+
+  limitFields() {
+    if (this.queryString.fields) {
+      const fields = this.queryString.fields.split(',').join(' ');
+      this.query = this.query.select(fields);
+    } else {
+      this.query = this.query.select('-__v');
+    }
+
+    return this;
+  }
+
+  paginate() {
+    const page = this.queryString.page * 1 || 1;
+    const limit = this.queryString.limit * 1 || 100;
+    const skip = (page - 1) * limit;
+
+    this.query = this.query.skip(skip).limit(limit);
+
+    return this;
   }
 }
+module.exports = APIFeatures;
 
-
-    //EXECUTE QUERY
-    //create instance of APIfeatures, that will then get stored into Features.
-    // we need to pass a query(create a query object Tour.find() and the queryString.
-    //so this features will get API filtering functionality.
-    const features = new APIFeatures(Tour.find(), req.query).filter();
-    const tours = await features.query;
-
-  ....
-};
- 
 ```
 
+## 💛Aggregation Pipeline: Matching and Grouping
+
+MongoDB aggregation pipeline which is an extremely powerful and extremely useful MongoDB framework for data aggregation. And the idea is that we basically define a pipeline that all documents from a certain collection go through where they are processed step by step in order to transform them into aggregated results. For example, we can use the aggregation pipeline in order to calculate averages or calculating minimum and maximum values or we can calculate distances even, and we can really do all kinds of stuff. It's really amazing how powerful this aggregation pipeline is.
