@@ -2209,6 +2209,67 @@ module.exports = APIFeatures;
 
 ## 💛Aggregation Pipeline: Matching and Grouping
 
+[Aggregation Operations reference]![img](https://www.mongodb.com/docs/manual/assets/link.svg)(https://www.mongodb.com/docs/manual/aggregation/) 
+
 MongoDB aggregation pipeline which is an extremely powerful and extremely useful MongoDB framework for data aggregation. And the idea is that **we basically define a pipeline that all documents from a certain collection go through where they are processed step by step in order to transform them into aggregated results.** 
 
 For example, we can use the aggregation pipeline in order to calculate averages or calculating minimum and maximum values or we can calculate distances even, and we can really do all kinds of stuff. It's really amazing how powerful this aggregation pipeline is.
+
+
+
+So I want to create a function here that's gonna calculate a couple of statistics about our tours. So I'm gonna call this one getTourStats.
+
+```js
+//💛Aggregation Pipeline: Matching and Grouping
+exports.getTourStats = async (req, res) => {
+  try {
+    const stats = await Tour.aggregate([
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        stats,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+```
+
+Now the aggregation pipeline really is a MongoDB feature.But **Mongoose, of course, gives us access to it,so that we can use it in the Mongoose driver,** right? So using our tour model in order to accessthe tour collection, we say **tour.aggregate.**
+
+And so the aggregation pipeline is a bitlike a regular query and so using the aggregation pipelineit's a just a bit like doing a **regular query.**
+
+The difference here is that in aggregations, **we can manipulate the data in a couple of different steps and so let's now actually define these steps.**And for that, we pass in an array of so-called **stages**. So we pass in an array, and then here we will then have a lot of stages.And again the documents then pass through these stagesone by one, step by step in the define sequenceas we define it here. So each of the elements in this array will be one of the stages.
+
+```js
+   const stats = await Tour.aggregate([
+      {
+        $match: { ratingsAverage: { $gte: 4.5 } },
+      },
+      {
+        $group: {
+          _id: { $toUpper: '$difficulty' },
+          numTours: { $sum: 1 },
+          numRatings: { $sum: '$ratingsQuantity' },
+          avgRating: { $avg: '$ratingsAverage' },
+          avgPrice: { $avg: '$price' },
+          minPrice: { $min: '$price' },
+          maxPrice: { $max: '$price' },
+        },
+      },
+      {
+        $sort: { avgPrice: 1 },
+      },
+      // {
+      //   $match: { _id: { $ne: 'EASY' } }
+      // }
+    ]);
+```
+
