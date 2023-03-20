@@ -2393,9 +2393,11 @@ router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 ## Virtual Properties
 
+### Define the virtual property
+
 now virtual properties are basically fieldsthat we can define on our schemabut that will not be persisted.So they will not be saved into the databasein order to save us some space there.And most of the time, of course,we want to really save our data to the database,but virtual properties make a lot of sens efor fields that can be derived from one another.For example a conversion from miles to kilometers,it doesn't make sense to store these two fieldsin a database if we can easily convertone to the other, right?
 
-### Define the virtual property
+And that's because we need to explicitly definein our schema that we want the virtual propertiesin our output.And so remember how I said that into this **Mongoose.schema,we can pass in not only the objectwith the schema definition itself,but also an object for the schema options.**And so let's add that here at the end,so this first object here is the schema definition,and now second **an object for the options.**And what we need to specify here is the `to JSON  `  property here, and what we say is then that **each time that the data is actually outputted as JSON,we want virtuals to be true**.So basically the virtuals to be part of the output.And now I'm duplicating this because we also want to say to object.
 
 > models/tourModel.js
 
@@ -2405,8 +2407,8 @@ const tourSchema = new mongoose.Schema(
  
 .....
   {
-    toJSON: { victuals: true },
-    toOBJECT: { victuals: true },
+    toJSON: { virtuals: true },
+    toOBJECT: { virtuals: true },
   }
 );
 
@@ -2415,4 +2417,12 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 ```
+
+ ![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679275946/node.js%20notes/Screen_Shot_2023-03-19_at_8.31.52_PM_gab5u3.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679275946/node.js notes/Screen_Shot_2023-03-19_at_8.31.52_PM_gab5u3.png)
+
+Now one thing that we need to keep in mindis that we cannot use this virtual property herein a query, because they're technicallynot part of the database.So we can not say, for example,tour.find where duration weeks is equal to one.That's not gonna work, again because this propertyis not actually part of the database.Now of course we could also have done this conversioneach time after we query the data, for example,like in a controller, but that would notbe the best practice simply because we want to tryto keep business logic and application logic as much separated as possible, remember?So that was that whole talk about fat modelsand thin controllers that we talked about beforewhich says that we should have modelswith as much business logic as we can offload to themand thin controllers with as littlebusiness logic as possible.And so virtual properties like this are actuallya good example of how we can achievethat kind of architecture.So knowing the duration in weeksis a business logic because it has to dowith the business itself, not with stuff like requestsor responses, and so we do the calculationright in the model where it belongsand not in the controller.
+
+
+
+## Document middleware
 
