@@ -10,6 +10,7 @@ const tourSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    slug: String,
     duration: {
       type: Number,
       required: [true, `A tour must have a duration`],
@@ -76,6 +77,10 @@ tourSchema.post('save', function (doc, next) {
   console.log(doc);
   next();
 });
+
+const Tour = mongoose.model('Tour', tourSchema);
+
+module.exports = Tour;
 /*  
 const testTour = new Tour({
   name: 'The Forest Hiker',
@@ -100,7 +105,3 @@ testTour
     console.log(doc);
   })
   .catch((err) => console.log('ERROR💥:', err)); */
-
-const Tour = mongoose.model('Tour', tourSchema);
-
-module.exports = Tour;
