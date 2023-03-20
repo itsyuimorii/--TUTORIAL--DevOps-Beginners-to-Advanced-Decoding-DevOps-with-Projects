@@ -169,6 +169,7 @@ exports.getMonthlyPlan = async (req, res) => {
         },
       },
       {
+        //get the tours that start on the same month
         $group: {
           _id: { $month: '$startDates' },
           numTourStarts: { $sum: 1 },
@@ -178,18 +179,18 @@ exports.getMonthlyPlan = async (req, res) => {
       {
         $addFields: { month: '$_id' },
       },
-      // {
-      //   // 0 or 1  make id no longer show up in the query
-      //   $project: {
-      //     _id: 0,
-      //   },
-      // },
-      // {
-      //   $sort: { numTourStarts: -1 },
-      // },
-      // {
-      //   $limit: 12,
-      // },
+      {
+        // hide the id
+        $project: {
+          _id: 0,
+        },
+      },
+      {
+        $sort: { numTourStarts: -1 },
+      },
+      {
+        $limit: 12,
+      },
     ]);
 
     res.status(200).json({
