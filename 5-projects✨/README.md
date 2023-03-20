@@ -2447,6 +2447,8 @@ and so this is what our document is looking like right before it saved into the 
 
 And **so at this point of time, we can still act on the data before it is then saved to the database and that is exactly** what I wanna do here is to create a slug for each of these documents. So remember how in the first section, we created a slug for each of the products that we had in the store. And so **a slug is basically just a string that we can put in the URL, usually based on some string like the name.**  So in this case, we're gonna create **a slug based here on the tour name.** So remember how for that we used the slugify package. And so let's now go ahead and install that.
 
+> models/tourModel.js
+
 ```js
 // eslint-disable-next-line import/no-extraneous-dependencies
 const slugify = require('slugify');
@@ -2496,18 +2498,25 @@ tourSchema.pre('find', function(next) {
 
 let's suppose that we can havesecret tours in our database,like for tours that are only offered internally,or for a very small, like, VIP group of people,and that the public shouldn't know about.Now, since these tours are secret,we do not want the secret tours to ever appearin the result outputs.Right?
 
+> models/tourModel.js
+
 ```js
 const tourSchema = new mongoose.Schema(
   {
+  ...
 	secretTour: {
       type: Boolean,
       default: false
     }
+  },
   ...
+);
+  
     
 // QUERY MIDDLEWARE
 // tourSchema.pre('find', function(next) {
 tourSchema.pre(/^find/, function (next) {
+  //find all document `secretTour` is not true
   this.find({ secretTour: { $ne: true } });
 
   this.start = Date.now();
