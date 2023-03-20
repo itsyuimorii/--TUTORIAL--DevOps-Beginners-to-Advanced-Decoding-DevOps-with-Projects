@@ -91,6 +91,7 @@ tourSchema.post('save', function (doc, next) {
 
 // QUERY MIDDLEWARE
 // tourSchema.pre('find', function(next) {
+//all command start with find =>/^find/
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
   this.start = Date.now();
