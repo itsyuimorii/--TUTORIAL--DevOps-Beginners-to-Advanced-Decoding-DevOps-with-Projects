@@ -54,8 +54,8 @@ const tourSchema = new mongoose.Schema(
     startDates: [Date],
   },
   {
-    toJSON: { victuals: true },
-    toOBJECT: { victuals: true },
+    toJSON: { virtuals: true },
+    toOBJECT: { virtuals: true },
   }
 );
 
