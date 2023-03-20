@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
-const slugify = require('slugify');
-const tourSchema = new mongoose.Schema(
+import slugify from 'slugify';
+import { Schema, model } from 'mongoose';
+
+const tourSchema = new Schema(
   {
     name: {
       type: String,
@@ -93,6 +94,6 @@ testTour
   })
   .catch((err) => console.log('ERROR💥:', err)); */
 
-const Tour = mongoose.model('Tour', tourSchema);
+const Tour = model('Tour', tourSchema);
 
-module.exports = Tour;
+export default Tour;
