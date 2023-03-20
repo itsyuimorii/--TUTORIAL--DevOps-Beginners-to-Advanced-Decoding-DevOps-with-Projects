@@ -71,7 +71,11 @@ tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
-
+// eslint-disable-next-line prefer-arrow-callback
+tourSchema.post('save', function (doc, next) {
+  console.log(doc);
+  next();
+});
 /*  
 const testTour = new Tour({
   name: 'The Forest Hiker',
