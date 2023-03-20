@@ -2428,8 +2428,21 @@ Now, just like with Express, we can use **Mongoose middleware** to make **someth
 
 So there are four types of middleware in Mongoose: **document, query, aggregate, and model middleware.**And in this lecture, we're gonna talk about **document middleware,** **which is middleware that can act on the currently processed document.**
 
-So just like the virtual properties,we define a middleware on the schema,so `tourSchema.pre`.And so this is for **pre middleware,** which again,is gonna **run before an actual event.**And that event in this case is the save event. And so this call back function that we're gonna define here next,so function so this function will be called before an **actual documentis saved to the database.** So this is document middleware,and it runs, let me write all of that here.
+So just like the virtual properties,we define a middleware on the schema,so `tourSchema.pre`.And so this is for **pre middleware,** which again,is gonna **run before an actual event.**And that event in this case is the **save** event. And so this callback function that we're gonna define here next, so  this function will be called before an **actual documentis saved to the database.** So this is document middleware,and it runs, let me write all of that here. So it runs before the **.save()** command and the **.create()** command. But not on insert many. 
 
+So if we use this command here, so insertMany,then that will actually not trigger the save middleware.So always keep that in mind.It's very important to realize that only on saveand on create actually this middleware hereis gonna be executed.And so let's start by doing a simple console.logand what I'm gonna log through the console is this.And so in a save middleware, the disk keyword hereis gonna point to the currently processed document.And that is the reason why it is called document middleware.
 
+Again, because in this function here,we have access to the document that is being processed.So in this case, the document that is being saved.And so let me just very quickly show that to you using this console.log.And so in order to now trigger this function,remember we need to run a save command or a create command.And so we now need to create a new tour using our API in order to, yeah, to then trigger this middleware.So let's go here to, to postman, and I'm gonna start byby saving these two new routes that we created 
 
-So it runs before the save commandand the .create command.But not on insert many.So if we use this command here, so insertMany,then that will actually not trigger the save middleware.So always keep that in mind.It's very important to realize that only on saveand on create actually this middleware hereis gonna be executed.And so let's start by doing a simple console.logand what I'm gonna log through the console is this.And so in a save middleware, the disk keyword hereis gonna point to the currently processed document.And that is the reason why it is called document middleware.Again, because in this function here,we have access to the document that is being processed.So in this case, the document that is being saved.And so let me just very quickly show that to youusing this console.log.And so in order to now trigger this function,remember we need to run a save command or a create command.And so we now need to create a new tour using our APIin order to, yeah, to then trigger this middleware.So let's go here to, to postman, and I'm gonna start byby saving these two new routes that we created 
+```js
+//DOCUMENT MIDDLEWARE : runs before .save() and .create() methods
+tourSchema.pre('save', function () {
+  console.log(this);
+});
+```
+
+and so this is what our document is looking like right before it saved into the database.
+
+![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679277198/node.js%20notes/Screen_Shot_2023-03-19_at_8.50.38_PM_df0pmd.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679277198/node.js notes/Screen_Shot_2023-03-19_at_8.50.38_PM_df0pmd.png)
+
+And **so at this point of time, we can still act on the data before it is then saved to the database and that is exactly** what I wanna do here is to create a slug for each of these documents. So remember how in the first section, we created a slug for each of the products that we had in the store. And so a slug is basically just a string that we can put in the URL, usually based on some string like the name.  So in this case, we're gonna create a slug based here on the tour name. So remember how for that we used the slugify package. And so let's now go ahead and install that.
