@@ -2392,3 +2392,27 @@ router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 ![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679272909/node.js%20notes/Screen_Shot_2023-03-19_at_7.41.24_PM_v0ii82.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679272909/node.js notes/Screen_Shot_2023-03-19_at_7.41.24_PM_v0ii82.png)
 
 ## Virtual Properties
+
+now virtual properties are basically fieldsthat we can define on our schemabut that will not be persisted.So they will not be saved into the databasein order to save us some space there.And most of the time, of course,we want to really save our data to the database,but virtual properties make a lot of sens efor fields that can be derived from one another.For example a conversion from miles to kilometers,it doesn't make sense to store these two fieldsin a database if we can easily convertone to the other, right?
+
+### Define the virtual property
+
+> models/tourModel.js
+
+```js
+
+const tourSchema = new mongoose.Schema(
+ 
+.....
+  {
+    toJSON: { victuals: true },
+    toOBJECT: { victuals: true },
+  }
+);
+
+//use regular functions is becuase we want to get 'this', arrow function doesnt have 'this'
+tourSchema.virtual('durationWeeks').get(function () {
+  return this.duration / 7;
+});
+```
+
