@@ -2480,14 +2480,40 @@ tourSchema.post('save', function (doc, next) {
 
 **multiplepre middlewares or also post middlewares for the same hook.And hook is what we call this save here. So this middleware here is basically what we calla pre save hook.**
 
-
-
-
-
-
-
-
-
-
+**that this save middleware only runs for the saveand create Mongoose methods**.It's not gonna run, for example, for 	`insertmany` and also not for find one and `update or find by ID and update` which we already used before. So for example, we somewhere here we havewe have findByIdAndUpdate, but that is not gonna triggerthis save middleware.So that's very important to keep in mindbecause actually a bit later in this project,we will have to work around that limitation.All right, so this is document middlewareto manipulate documents that are currently being saved.Next up, we're gonna talk about query middleware.
 
 [#Middleware mongoose ‼️](https://blog.csdn.net/caseywei/article/details/109524964)
+
+## Query middleware
+
+ let's now add a pre-find hook,so basically, a middleware that is gonna runbefore any find query is executed.So let's add another comment here.So this is query middleware.
+
+And of course, it works in a very similar wayas before.So the tourSchema, and then pre,and in here we define the hook,which is gonna be "find."So, function, and again, we have accessto the next function.
+
+```js
+tourSchema.pre('find', function(next) {
+```
+
+let's suppose that we can havesecret tours in our database,like for tours that are only offered internally,or for a very small, like, VIP group of people,and that the public shouldn't know about.Now, since these tours are secret,we do not want the secret tours to ever appearin the result outputs.Right?
+
+```js
+const tourSchema = new mongoose.Schema(
+  {
+	secretTour: {
+      type: Boolean,
+      default: false
+    }
+  ...
+    
+// QUERY MIDDLEWARE
+// tourSchema.pre('find', function(next) {
+tourSchema.pre(/^find/, function (next) {
+  this.find({ secretTour: { $ne: true } });
+
+  this.start = Date.now();
+  next();
+});
+```
+
+
+
