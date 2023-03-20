@@ -2390,3 +2390,5 @@ router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 ```
 
 ![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679272909/node.js%20notes/Screen_Shot_2023-03-19_at_7.41.24_PM_v0ii82.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679272909/node.js notes/Screen_Shot_2023-03-19_at_7.41.24_PM_v0ii82.png)
+
+## Virtual Properties
