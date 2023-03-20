@@ -2432,7 +2432,7 @@ So just like the virtual properties,we define a middleware on the schema,so `tou
 
 So if we use this command here, so insertMany,then that will actually not trigger the save middleware.So always keep that in mind.It's very important to realize that only on saveand on create actually this middleware hereis gonna be executed.And so let's start by doing a simple console.logand what I'm gonna log through the console is this.And so in a save middleware, the disk keyword hereis gonna point to the currently processed document.And that is the reason why it is called document middleware.
 
-Again, because in this function here,we have access to the document that is being processed.So in this case, the document that is being saved.And so let me just very quickly show that to you using this console.log.And so in order to now trigger this function,remember we need to run a save command or a create command.And so we now need to create a new tour using our API in order to, yeah, to then trigger this middleware.So let's go here to, to postman, and I'm gonna start byby saving these two new routes that we created 
+Again, because in this function here,we have access to the document that is being processed. So in this case, the document that is being saved.And so let me just very quickly show that to you using this console.log.And so in order to now trigger this function,remember we need to run a save command or a create command.And so we now need to create a new tour using our API in order to, yeah, to then trigger this middleware.So let's go here to, to postman, and I'm gonna start byby saving these two new routes that we created 
 
 ```js
 //DOCUMENT MIDDLEWARE : runs before .save() and .create() methods
@@ -2450,6 +2450,13 @@ And **so at this point of time, we can still act on the data before it is then s
 ```js
 // eslint-disable-next-line import/no-extraneous-dependencies
 const slugify = require('slugify');
+
+//.And remember this actually happened to us beforewhen we only had a couple of fields in the schema.And when we, then we'll define some fieldsthat were not in the schema, then they weresimply not persisted to the database.And the same thing is now happening here,so we defined the slug property, but it's not in our schema.
+const tourSchema = new mongoose.Schema(
+  {
+   ...
+    slug: String,
+   ...
  
 //DOCUMENT MIDDLEWARE : runs before .save() and .create() methods
 tourSchema.pre('save', function (next) {
@@ -2457,7 +2464,23 @@ tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
+    
+tourSchema.post('save', function (doc, next) {
+  console.log(doc);
+  next();
+});    
 ```
 
-[#Middleware mongoose ‼️](https://blog.csdn.net/caseywei/article/details/109524964)
+**multiplepre middlewares or also post middlewares for the same hook.And hook is what we call this save here. So this middleware here is basically what we calla pre save hook.**
 
+
+
+
+
+
+
+
+
+
+
+[#Middleware mongoose ‼️](https://blog.csdn.net/caseywei/article/details/109524964)
