@@ -2488,7 +2488,7 @@ tourSchema.post('save', function (doc, next) {
 
 ## Query middleware
 
- let's now add a pre-find hook,so basically, a middleware that is gonna runbefore any find query is executed.So let's add another comment here.So this is query middleware.
+let's now add a pre-find hook,so basically, a middleware that is gonna runbefore any find query is executed.So let's add another comment here.So this is query middleware.
 
 And of course, it works in a very similar wayas before.So the tourSchema, and then pre,and in here we define the hook,which is gonna be "find."So, function, and again, we have accessto the next function.
 
@@ -2512,7 +2512,6 @@ const tourSchema = new mongoose.Schema(
   ...
 );
   
-    
 // QUERY MIDDLEWARE
 // tourSchema.pre('find', function(next) {
 tourSchema.pre(/^find/, function (next) {
@@ -2522,7 +2521,12 @@ tourSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
 });
+
+tourSchema.post(/^find/, function (docs, next) {
+  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+  next();
+});
 ```
 
-
+/^find/ can run find, findOne, findOneandDelete.....
 
