@@ -2297,7 +2297,9 @@ exports.getTourStats = async (req, res) => {
 router.route('/tour-stats').get(tourController.getTourStats);
 ```
 
-![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679244203/node.js%20notes/Screen_Shot_2023-03-19_at_11.43.19_AM_d1x6rq.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679244203/node.js notes/Screen_Shot_2023-03-19_at_11.43.19_AM_d1x6rq.png))
+## ![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679244203/node.js%20notes/Screen_Shot_2023-03-19_at_11.43.19_AM_d1x6rq.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679244203/node.js notes/Screen_Shot_2023-03-19_at_11.43.19_AM_d1x6rq.png)
+
+## Aggregation Pipeline: Unwinding and Projecting
 
 ```js
 exports.getMonthlyPlan = async (req, res) => {
@@ -2362,4 +2364,4 @@ router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 ![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679243151/node.js%20notes/Screen_Shot_2023-03-19_at_11.25.45_AM_ocwmcm.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679243151/node.js notes/Screen_Shot_2023-03-19_at_11.25.45_AM_ocwmcm.png)
 
-## Aggregation Pipeline: Unwinding and Projecting
+
