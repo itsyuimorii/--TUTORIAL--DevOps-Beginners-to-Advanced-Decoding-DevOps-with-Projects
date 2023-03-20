@@ -173,6 +173,7 @@ exports.getMonthlyPlan = async (req, res) => {
           //group it by month
           _id: { $month: '$startDates' },
           numTourStarts: { $sum: 1 },
+          tours: { $push: '$name' },
         },
       },
     ]);
