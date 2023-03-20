@@ -69,7 +69,7 @@ const tourSchema = new mongoose.Schema(
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
-
+/* 
 //DOCUMENT MIDDLEWARE : runs before .save() and .create() methods
 tourSchema.pre('save', function (next) {
   // console.log(this);
@@ -87,7 +87,7 @@ tourSchema.pre('save', function (next) {
 tourSchema.post('save', function (doc, next) {
   console.log(doc);
   next();
-});
+}); */
 
 // QUERY MIDDLEWARE
 // tourSchema.pre('find', function(next) {
