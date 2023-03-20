@@ -157,6 +157,7 @@ exports.getMonthlyPlan = async (req, res) => {
 
     const plan = await Tour.aggregate([
       {
+        //basically deconstruct an array field from the info documents and then output one document for each element of the array.
         $unwind: '$startDates',
       },
       {
