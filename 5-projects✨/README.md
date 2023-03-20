@@ -2422,7 +2422,7 @@ tourSchema.virtual('durationWeeks').get(function () {
 
 Now one thing that we need to keep in mindis that we cannot use this virtual property herein a query, because they're technically not part of the database.So we can not say, for example,tour.find where duration weeks is equal to one.That's not gonna work, again because this propertyis not actually part of the database.Now of course we could also have done this conversioneach time after we query the data, for example,like in a controller, but that would notbe the best practice simply because we want to tryto keep business logic and application logic as much separated as possible, remember? So that was that whole talk about fat modelsand thin controllers that we talked about beforewhich says that we should have modelswith as much business logic as we can off load to themand thin controllers with as littlebusiness logic as possible.And so virtual properties like this are actually a good example of how we can achievethat kind of architecture.So knowing the duration in weeksis a business logic because it has to dowith the business itself, not with stuff like requestsor responses, and so we do the calculationright in the model where it belongsand not in the controller.
 
-## Document middleware(Mongoose)
+## [#](https://mongoosejs.com/docs/middleware.html#pre)Document middleware(Mongoose)
 
 Now, just like with Express, we can use **Mongoose middleware** to make **something happen between two event**s. For example, each time a new document is saved to the database, we can **run a function between the save command is issued and the actual saving of the document,** or also after the actual saving.And that's the reason why Mongoose middlewareis also called **pre and post hooks.  **
 
@@ -2445,4 +2445,19 @@ and so this is what our document is looking like right before it saved into the 
 
 ![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679277198/node.js%20notes/Screen_Shot_2023-03-19_at_8.50.38_PM_df0pmd.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679277198/node.js notes/Screen_Shot_2023-03-19_at_8.50.38_PM_df0pmd.png)
 
-And **so at this point of time, we can still act on the data before it is then saved to the database and that is exactly** what I wanna do here is to create a slug for each of these documents. So remember how in the first section, we created a slug for each of the products that we had in the store. And so a slug is basically just a string that we can put in the URL, usually based on some string like the name.  So in this case, we're gonna create a slug based here on the tour name. So remember how for that we used the slugify package. And so let's now go ahead and install that.
+And **so at this point of time, we can still act on the data before it is then saved to the database and that is exactly** what I wanna do here is to create a slug for each of these documents. So remember how in the first section, we created a slug for each of the products that we had in the store. And so **a slug is basically just a string that we can put in the URL, usually based on some string like the name.**  So in this case, we're gonna create **a slug based here on the tour name.** So remember how for that we used the slugify package. And so let's now go ahead and install that.
+
+```js
+// eslint-disable-next-line import/no-extraneous-dependencies
+const slugify = require('slugify');
+ 
+//DOCUMENT MIDDLEWARE : runs before .save() and .create() methods
+tourSchema.pre('save', function (next) {
+  // console.log(this);
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+```
+
+[#Middleware mongoose ‼️](https://blog.csdn.net/caseywei/article/details/109524964)
+

@@ -1,7 +1,8 @@
-import slugify from 'slugify';
-import { Schema, model } from 'mongoose';
+// eslint-disable-next-line import/no-extraneous-dependencies
+const slugify = require('slugify');
+const mongoose = require('mongoose');
 
-const tourSchema = new Schema(
+const tourSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -65,8 +66,10 @@ tourSchema.virtual('durationWeeks').get(function () {
 });
 
 //DOCUMENT MIDDLEWARE : runs before .save() and .create() methods
-tourSchema.pre('save', function () {
-  console.log(this);
+tourSchema.pre('save', function (next) {
+  // console.log(this);
+  this.slug = slugify(this.name, { lower: true });
+  next();
 });
 
 /*  
@@ -94,6 +97,6 @@ testTour
   })
   .catch((err) => console.log('ERROR💥:', err)); */
 
-const Tour = model('Tour', tourSchema);
+const Tour = mongoose.model('Tour', tourSchema);
 
-export default Tour;
+module.exports = Tour;
