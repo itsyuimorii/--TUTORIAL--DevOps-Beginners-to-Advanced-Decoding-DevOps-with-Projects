@@ -2364,4 +2364,29 @@ router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 ![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679243151/node.js%20notes/Screen_Shot_2023-03-19_at_11.25.45_AM_ocwmcm.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679243151/node.js notes/Screen_Shot_2023-03-19_at_11.25.45_AM_ocwmcm.png)
 
+```js
+ const plan = await Tour.aggregate([
+      {
+        //basically deconstruct an array field from the info documents and then output one document for each element of the array.
+        $unwind: '$startDates',
+      },
+      {
+        $match: {
+          startDates: {
+            $gte: new Date(`${year}-01-01`),
+            $lte: new Date(`${year}-12-31`),
+          },
+        },
+      },
+      {
+        $group: {
+          //group it by month
+          _id: { $month: '$startDates' },
+          numTourStarts: { $sum: 1 },
+          tours: { $push: '$name' },
+        },
+      },
+    ]);
+```
 
+![https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679272909/node.js%20notes/Screen_Shot_2023-03-19_at_7.41.24_PM_v0ii82.png](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679272909/node.js notes/Screen_Shot_2023-03-19_at_7.41.24_PM_v0ii82.png)
