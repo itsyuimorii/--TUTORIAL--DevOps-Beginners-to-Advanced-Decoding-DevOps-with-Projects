@@ -2556,3 +2556,61 @@ this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 ## Data Validation: Built-In Validators
 
 Well, validation is basically checking if the enteredvalues are in the right format for each fieldin our document schema, and also that valueshave actually been entered for all of the required fields.Now, on the other hand, we also have sanitization,which is to ensure that the inputted data isbasically clean, so that there is no malicious codebeing injected into our database,or into the application itself.So, in that step we remove unwanted characters,or even code, from the input data, all right?And this is actually a crucial step, like,a golden standard in back-end development.To never, ever accept input datacoming from a user as it is.So, we always need to sanitize that incoming data.But, anyway, I will leave data sanitizationfor the security section of the course,so that in this lecturewe can focus entirely on data validation.
+
+And that, again, is because of the fat modeland thin controller philosophy,which makes the model the perfect placeto perform validation, right?And, in fact, Mongoose already comes with a bunchof validation tools out of the box.
+
+```js
+
+const tourSchema = new mongoose.Schema(
+  {
+    name: {
+    ....
+      maxlength: [40, 'A tour name must have less or equal then 40 characters'],
+      minlength: [10, 'A tour name must have more or equal then 10 characters']
+      // validate: [validator.isAlpha, 'Tour name must only contain characters']
+    },
+    ratingAverage: {
+      .....
+      min: [1, 'Rating must be above 1.0'],
+      max: [5, 'Rating must be below 5.0'],
+    },
+```
+
+```js
+    difficulty: {
+      type: String,
+      required: [true, `A tour must have a difficulty`],
+      enum: {
+        values: ['easy', 'medium', 'difficult'],
+        message: 'Difficulty is either: easy, medium, difficult',
+      },
+    },
+```
+
+## Data Validation: Custom Validators
+
+
+
+which should return either true or false.And if it returns false, then it means there is an error.And on the other hand when we return true,then the validation is correctand the input can be accepted.Okay, so let's now build a simple custom validator here.
+
+```js
+ priceDiscount: {
+      type: Number,
+      validate: {
+        validator: function(val) {
+          // this only points to current doc on NEW document creation
+          return val < this.price;
+        },
+        message: 'Discount price ({VALUE}) should be below regular price'
+      }
+    },
+```
+
+> npm i validator https://github.com/validatorjs/validator.js/
+
+```js
+const validator = require('validator');
+...
+//validate: [validator.isAlpha, 'Tour name must only contain characters']
+```
+
