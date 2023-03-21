@@ -2532,3 +2532,27 @@ tourSchema.post(/^find/, function (docs, next) {
 
 ## Aggregation middleware
 
+```js
+// AGGREGATION MIDDLEWARE
+tourSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+
+  console.log(this.pipeline());
+  next();
+});
+```
+
+After sending this request at postman `127.0.0.1:3000/api/v1/tours/tour-stats`
+
+![](https://res.cloudinary.com/dxmfrq4tk/image/upload/v1679366239/Screen_Shot_2023-03-20_at_9.36.21_PM_xzuwnn.png)
+
+it matched the group with **controllers/tourController.js** routes 
+
+```js
+//Basically removing from the output all the documents that have secretTour set to true 
+this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+```
+
+## Data Validation: Built-In Validators
+
+Well, validation is basically checking if the enteredvalues are in the right format for each fieldin our document schema, and also that valueshave actually been entered for all of the required fields.Now, on the other hand, we also have sanitization,which is to ensure that the inputted data isbasically clean, so that there is no malicious codebeing injected into our database,or into the application itself.So, in that step we remove unwanted characters,or even code, from the input data, all right?And this is actually a crucial step, like,a golden standard in back-end development.To never, ever accept input datacoming from a user as it is.So, we always need to sanitize that incoming data.But, anyway, I will leave data sanitizationfor the security section of the course,so that in this lecturewe can focus entirely on data validation.
