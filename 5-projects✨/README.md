@@ -2530,3 +2530,5 @@ tourSchema.post(/^find/, function (docs, next) {
 
 /^find/ can run find, findOne, findOneandDelete.....
 
+## Aggregation middleware
+
